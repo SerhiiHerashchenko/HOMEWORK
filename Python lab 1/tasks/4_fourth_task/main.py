@@ -1,4 +1,4 @@
-file = open("4_fourth_task/input.txt")
+file = open("C:\\Users\\tiko1\\Documents\\GitHub\\HOMEWORK\\Python lab 1\\tasks\\4_fourth_task\\input.txt")
 
 data = file.read().split("\n")
 
@@ -14,6 +14,6 @@ for row in data:
     if data.index(row) != len(data) - 1:
         return_text +="\n"
 file.close()
-file = open("4_fourth_task/input.txt", "w")
+file = open("C:\\Users\\tiko1\\Documents\\GitHub\\HOMEWORK\\Python lab 1\\tasks\\4_fourth_task\\output.txt", "w")
 file.write(return_text)
 file.close()

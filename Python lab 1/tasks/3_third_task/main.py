@@ -1,4 +1,4 @@
-file = open("3_third_task/test.txt")
+file = open("C:\\Users\\tiko1\\Documents\\GitHub\\HOMEWORK\\Python lab 1\\tasks\\3_third_task\\test.txt")
 carriage = []
 rows = 15
 cols = 36
