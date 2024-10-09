@@ -1,31 +1,28 @@
 import numpy as np
 
-def point2angle(point):
-    sign = np.sign(point[:,1])*np.sign(point[:,0])
-    return sign * np.arccos(point[:,0])
+points = np.random.uniform(0, 20, (10, 2))
 
-points = np.array([[0, 0],
-                    [-0.5, 0],
-                    [0.5, 1],
-                    [-1, 0],
-                    [0, -1]])
-angles = point2angle(points)
+def manhattan_distance_matrix(points):
+    num_points = points.shape[0]
+    distance_matrix = np.zeros((num_points, num_points))
+    
+    for i in range(num_points):
+        for j in range(num_points):
+            distance_matrix[i, j] = np.abs(points[i, 0] - points[j, 0]) + np.abs(points[i, 1] - points[j, 1])
+    
+    return distance_matrix
 
-sorted_indices = np.argsort(angles)
-sorted_points = points[sorted_indices]
-sorted_angles = angles[sorted_indices]
+distance_matrix = manhattan_distance_matrix(points)
 
-#------------------------------------------
-print(sorted_points[0])
-#------------------------------------------
+max_distance_index = np.unravel_index(np.argmax(distance_matrix, axis=None), distance_matrix.shape)
+point1 = points[max_distance_index[0]]
+point2 = points[max_distance_index[1]]
 
-filtered_indices = np.where((sorted_angles >= 0) & (sorted_angles <= np.pi / 2))[0]
+print("Generated points:")
+for point in points:
+    print(f"({point[0]:.2f}, {point[1]:.2f})")
 
-filtered_points = sorted_points[filtered_indices]
-filtered_angles = sorted_angles[filtered_indices]
+print("\nDistances:")
+print(np.round(distance_matrix, 2))
 
-#------------------------------------------
-print("Filtered angles:")
-print(filtered_points)
-print(filtered_angles)
-#------------------------------------------
+print(f"\nMost remote points: ({point1[0]:.2f}, {point1[1]:.2f}) and ({point2[0]:.2f}, {point2[1]:.2f})")
