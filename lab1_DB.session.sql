@@ -1,14 +1,21 @@
 USE lab1
 
-SELECT DISTINCT ПІБ FROM coaches;
+SELECT * FROM coaches;
+SELECT * FROM sportsmen;
+
+SELECT DISTINCT Рівень_майстерності FROM coaches;
 
 SELECT Стать, Тренер, ПІБ
 FROM sportsmen
-WHERE Стать IN ('ж')
+WHERE Стать IN ('ж');
 
 SELECT Стать, Тренер, ПІБ
 FROM sportsmen
-WHERE Стать NOT IN ('ж')
+WHERE Стать = 'ж';
+
+SELECT Стать, Тренер, ПІБ
+FROM sportsmen
+WHERE Стать NOT IN ('ж');
 
 SELECT Рейтинг, Тренер, ПІБ
 FROM sportsmen
@@ -56,10 +63,6 @@ WHERE Рейтинг REGEXP '^(11[0-9]{2}|16[0-9]{2})$';
 
 SELECT Рейтинг, Тренер, ПІБ
 FROM sportsmen
-WHERE Рейтинг REGEXP '^(11[0-9]{2}|16[0-9]{2})$';
-
-SELECT Рейтинг, Тренер, ПІБ
-FROM sportsmen
 WHERE Рейтинг REGEXP '[6,9]';
 
 -----------
@@ -80,7 +83,7 @@ ORDER BY Тренер DESC;
 
 SELECT Рейтинг, Тренер, ПІБ
 FROM sportsmen
-ORDER BY Рейтинг ASC, Тренер ASC;
+ORDER BY Тренер ASC, Рейтинг ASC;
 
 -----------
 
