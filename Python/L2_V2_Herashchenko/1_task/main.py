@@ -1,28 +1,38 @@
 import numpy as np
 
-points = np.random.uniform(0, 20, (10, 2))
-
-def manhattan_distance_matrix(points):
-    num_points = points.shape[0]
-    distance_matrix = np.zeros((num_points, num_points))
+def point2angle(points):
+    points = np.array(points)
     
-    for i in range(num_points):
-        for j in range(num_points):
-            distance_matrix[i, j] = np.abs(points[i, 0] - points[j, 0]) + np.abs(points[i, 1] - points[j, 1])
+    x = points[:, 0]
+    y = points[:, 1]
     
-    return distance_matrix
+    angles = np.arctan2(y, x)
+    angles = np.where(angles < 0, angles + 2 * np.pi, angles)
+    
+    return angles
 
-distance_matrix = manhattan_distance_matrix(points)
+random_angles = np.random.uniform(0, 2 * np.pi, 10)
 
-max_distance_index = np.unravel_index(np.argmax(distance_matrix, axis=None), distance_matrix.shape)
-point1 = points[max_distance_index[0]]
-point2 = points[max_distance_index[1]]
+points = np.column_stack((np.cos(random_angles), np.sin(random_angles)))
 
-print("Generated points:")
-for point in points:
-    print(f"({point[0]:.2f}, {point[1]:.2f})")
+angles = point2angle(points)
 
-print("\nDistances:")
-print(np.round(distance_matrix, 2))
+sorted_indices = np.argsort(angles)
+sorted_points = points[sorted_indices]
+sorted_angles = angles[sorted_indices]
 
-print(f"\nMost remote points: ({point1[0]:.2f}, {point1[1]:.2f}) and ({point2[0]:.2f}, {point2[1]:.2f})")
+#------------------------------------------
+print(sorted_points[0])
+#------------------------------------------
+
+filtered_indices = np.where((sorted_angles >= 0) & (sorted_angles <= np.pi / 2))[0]
+
+filtered_points = sorted_points[filtered_indices]
+filtered_angles = sorted_angles[filtered_indices]
+
+#------------------------------------------
+print("Filtered points:")
+print(filtered_points)
+print("Filtered angles:")
+print(filtered_angles)
+#------------------------------------------
