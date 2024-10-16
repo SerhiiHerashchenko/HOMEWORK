@@ -22,7 +22,7 @@ sorted_points = points[sorted_indices]
 sorted_angles = angles[sorted_indices]
 
 #------------------------------------------
-print(sorted_points[0])
+print(np.round(sorted_points[0], 3))
 #------------------------------------------
 
 filtered_indices = np.where((sorted_angles >= 0) & (sorted_angles <= np.pi / 2))[0]
@@ -32,7 +32,7 @@ filtered_angles = sorted_angles[filtered_indices]
 
 #------------------------------------------
 print("Filtered points:")
-print(filtered_points)
+print(np.round(filtered_points, 3))
 print("Filtered angles:")
-print(filtered_angles)
+print(np.round(filtered_angles, 3))
 #------------------------------------------
