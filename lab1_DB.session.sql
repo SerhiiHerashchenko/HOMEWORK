@@ -90,3 +90,26 @@ ORDER BY Тренер ASC, Рейтинг ASC;
 SELECT Рейтинг, Тренер, ПІБ
 FROM sportsmen
 LIMIT 3;
+
+
+
+
+
+------------
+
+SELECT Стипендія FROM sportsmen;
+SELECT AVG(Стипендія) AS СередняСтипендія FROM sportsmen;
+SELECT SUM(Стипендія) AS СумаСтипендій FROM sportsmen;
+SELECT MIN(Стипендія) AS МiнiмальнаСтипендія FROM sportsmen;
+SELECT MAX(Стипендія) AS МаксимальнаСтипендія FROM sportsmen;
+SELECT COUNT(Стипендія) AS КiлькiстьСтипендіатiв FROM sportsmen;
+
+-------------
+SELECT Тренер, AVG(Стипендія) AS СередняСтипендія
+FROM sportsmen 
+GROUP BY Тренер;
+
+SELECT Тренер, AVG(Стипендія) AS СередняСтипендія
+FROM sportsmen 
+GROUP BY Тренер
+HAVING СередняСтипендія > 3900;
