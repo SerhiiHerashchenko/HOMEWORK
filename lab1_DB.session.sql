@@ -113,3 +113,12 @@ SELECT Тренер, AVG(Стипендія) AS СередняСтипендія
 FROM sportsmen 
 GROUP BY Тренер
 HAVING СередняСтипендія > 3900;
+
+-------------
+SELECT sportsmen.ПІБ
+FROM sportsmen
+WHERE sportsmen.Рівень_майстерності = (
+    SELECT Рівень_майстерності
+    FROM coaches
+    WHERE coaches.Рейтинг < sportsmen.Рейтинг
+);
