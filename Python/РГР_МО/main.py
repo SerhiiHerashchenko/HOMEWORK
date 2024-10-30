@@ -30,7 +30,7 @@ C = (x1_C, line1(x1_C))
 fig, ax = plt.subplots(figsize=(8, 8))
 
 # Определяем диапазон для x1, приближая график к точкам пересечения
-x1_vals = np.linspace(0, 17, 400)
+x1_vals = np.linspace(0, 16, 400)
 
 # Строим графики функций, ограничивая область значений y
 y1_vals = line1(x1_vals)
@@ -43,9 +43,9 @@ ax.plot(x1_vals, y2_vals, label=r'$2x_1 + x_2 \geq 13$', color='g')
 ax.plot(x1_vals, y3_vals, label=r'$x_1 + x_2 \leq 13$', color='r')
 
 # Заполняем области для неравенств
-x1_fill = np.linspace(0, 16, 200)
-ax.fill_between(x1_fill, line2(x1_fill), 16, where=(line2(x1_fill) < 16), color='lightgreen', alpha=0.5)
-ax.fill_between(x1_fill, line3(x1_fill), 0, where=(line3(x1_fill) >= 0), color='lightcoral', alpha=0.5)
+x1_fill = np.linspace(0, 17, 200)
+ax.fill_between(x1_fill, line2(x1_fill), 16, where=(line2(x1_fill) < 16), color='#f5a442', alpha=0.5)
+ax.fill_between(x1_fill, line3(x1_fill), 0, where=(line3(x1_fill) >= 0), color='#42f5a1', alpha=0.5)
 
 # Обозначаем точки пересечения буквами
 ax.plot(*A, 'ko')
@@ -59,6 +59,9 @@ ax.text(C[0], C[1], 'C', fontsize=12, ha='left', va='bottom')
 
 # Выделяем отрезок AC жирным черным цветом
 ax.plot([A[0], C[0]], [A[1], C[1]], 'k-', linewidth=3)
+
+# Добавляем вектор с началом в (0, 0) и концом в (1, 1)
+ax.arrow(0, 0, 1, 1, head_width=0.3, head_length=0.3, fc='brown', ec='brown', linewidth=2)
 
 # Настройка ограничений на оси и отображение
 ax.set_xlim(-1, 15)
