@@ -146,3 +146,71 @@ WHERE Рейтинг < (SELECT AVG(Рейтинг) FROM Sportsmen);
 
 DELETE FROM Sportsmen
 WHERE Номер_посвідчення NOT IN (SELECT Спортсмен FROM Participation_in_competitions);
+
+
+
+
+-------------------------------
+-------------------------------
+-------------------------------
+
+
+SELECT s.ПІБ AS Спортсмен, c.Тип AS Змагання, c.Місце_проведення AS Мiсце, c.Дата_проведення AS Дата
+FROM Sportsmen AS s, Competitions AS c, Participation_in_competitions AS p
+WHERE s.Номер_посвідчення = p.Спортсмен
+  AND c.Id = p.Змагання;
+
+SELECT s.ПІБ AS Спортсмен, 
+       c.ПІБ AS Тренер, 
+       comp.Тип AS Змагання, 
+       comp.Місце_проведення AS Мiсце, 
+       comp.Дата_проведення AS Дата
+FROM Sportsmen AS s, Coaches AS c, Competitions AS comp, Participation_in_competitions AS p
+WHERE s.Номер_посвідчення = p.Спортсмен
+  AND comp.Id = p.Змагання
+  AND s.Тренер = c.Id;
+
+SELECT s.ПІБ AS Спортсмен, s.Рівень_майстерності, p.Результат, p.Зайняте_місце
+FROM Sportsmen AS s
+INNER JOIN Participation_in_competitions AS p ON s.Номер_посвідчення = p.Спортсмен;
+
+SELECT s.ПІБ AS Спортсмен, 
+       s.Рівень_майстерності, 
+       p.Результат, 
+       p.Зайняте_місце, 
+       comp.Тип AS Соревнование, 
+       comp.Місце_проведення AS Место, 
+       comp.Дата_проведення AS Дата
+FROM Sportsmen AS s
+INNER JOIN Participation_in_competitions AS p ON s.Номер_посвідчення = p.Спортсмен
+INNER JOIN Competitions AS comp ON p.Змагання = comp.Id;
+
+SELECT s.ПІБ AS Спортсмен, s.Рівень_майстерності, p.Результат, p.Зайняте_місце
+FROM Sportsmen AS s
+LEFT OUTER JOIN Participation_in_competitions AS p ON s.Номер_посвідчення = p.Спортсмен;
+
+SELECT s.ПІБ AS Спортсмен, 
+       s.Рівень_майстерності, 
+       p.Результат, 
+       p.Зайняте_місце, 
+       comp.Тип AS Соревнование, 
+       comp.Місце_проведення AS Место, 
+       comp.Дата_проведення AS Дата
+FROM Sportsmen AS s
+LEFT OUTER JOIN Participation_in_competitions AS p ON s.Номер_посвідчення = p.Спортсмен
+LEFT OUTER JOIN Competitions AS comp ON p.Змагання = comp.Id;
+
+SELECT s.ПІБ AS Спортсмен, s.Рівень_майстерності, p.Результат, p.Зайняте_місце
+FROM Sportsmen AS s
+RIGHT OUTER JOIN Participation_in_competitions AS p ON s.Номер_посвідчення = p.Спортсмен;
+
+SELECT s.ПІБ AS Спортсмен, 
+       s.Рівень_майстерності, 
+       p.Результат, 
+       p.Зайняте_місце, 
+       comp.Тип AS Соревнование, 
+       comp.Місце_проведення AS Место, 
+       comp.Дата_проведення AS Дата
+FROM Sportsmen AS s
+RIGHT OUTER JOIN Participation_in_competitions AS p ON s.Номер_посвідчення = p.Спортсмен
+RIGHT OUTER JOIN Competitions AS comp ON p.Змагання = comp.Id;
