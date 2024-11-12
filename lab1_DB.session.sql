@@ -214,3 +214,27 @@ SELECT s.ПІБ AS Спортсмен,
 FROM Sportsmen AS s
 RIGHT OUTER JOIN Participation_in_competitions AS p ON s.Номер_посвідчення = p.Спортсмен
 RIGHT OUTER JOIN Competitions AS comp ON p.Змагання = comp.Id;
+
+
+
+
+-------------------------------
+
+select * from coaches
+
+
+CREATE VIEW View_Sportsmen_Coaches AS
+SELECT 
+    s.ПІБ AS Спортсмен,
+    s.Дата_народження AS Дата_народження,
+    s.Стать,
+    s.Рівень_майстерності AS Рівень_майстерності_спортсмена,
+    s.Рейтинг AS Рейтинг_спортсмена,
+    c.ПІБ AS Тренер,
+    c.Рівень_майстерності AS Рівень_майстерності_тренера
+FROM Sportsmen s
+JOIN Coaches c ON s.Тренер = c.Id;
+
+DROP VIEW View_Sportsmen_Coaches;
+
+select * from View_Sportsmen_Coaches;
