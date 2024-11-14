@@ -21,15 +21,13 @@ a_unit = a / a_norm  # Нормализованный вектор
 grad_at_M_matrix = sp.Matrix(grad_at_M)  # Градиент в виде матрицы
 directional_derivative = grad_at_M_matrix.dot(a_unit)  # Производная по направлению нормализованного вектора
 
-# 4. Определение возрастания или убывания функции в точке M по направлению
 if directional_derivative > 0:
-    direction = 'возрастает'
+    direction = 'inc'
 elif directional_derivative < 0:
-    direction = 'убывает'
+    direction = 'dec'
 else:
-    direction = 'не изменяется'
+    direction = 'constant'
 
-# Вывод результатов
-print(f"Градиент функции f в точке M(1, 1): {grad_at_M}")
-print(f"Производная функции f в точке M по направлению нормализованного вектора a: {directional_derivative}")
-print(f"Функция f в точке M по направлению нормализованного вектора a {'возрастает' if direction == 'возрастает' else 'убывает' if direction == 'убывает' else 'не изменяется'}")
+print(f"grad(f) in M(1, 1): {grad_at_M}")
+print(f"derivative of f in M in a direction: {directional_derivative}")
+print(f"Function f in M in a direction {'inc' if direction == 'inc' else 'dec' if direction == 'dec' else 'constant'}")

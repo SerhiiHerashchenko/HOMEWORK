@@ -1,17 +1,12 @@
 import sympy as sp
 
-# Определяем переменную x
 x = sp.symbols('x')
 
-# Определяем функцию f(x)
 f = x / (3 - 2 * x**2)
 
-# Находим первообразную (неопределенный интеграл)
 F = sp.integrate(f, x)
 
-# Проверяем результат дифференцированием
 F_prime = sp.diff(F, x)
 
-# Выводим результаты
-print(f"Первообразная функции f(x): {F}")
-print(f"Проверка дифференцированием (d/dx от F): {F_prime}")
+print(f"antiderivative f(x): {F}")
+print(f"(d/dx(F)): {F_prime}")
