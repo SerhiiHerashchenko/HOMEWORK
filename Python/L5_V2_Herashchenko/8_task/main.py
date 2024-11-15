@@ -7,4 +7,4 @@ eq = sp.Derivative(y, x, x) + y - sp.tan(x)
 
 solution = sp.dsolve(eq)
 
-print(solution)
+sp.pprint(solution)
