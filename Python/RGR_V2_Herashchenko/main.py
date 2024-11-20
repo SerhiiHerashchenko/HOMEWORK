@@ -1,22 +1,32 @@
 import numpy as np
 
-# 1. Кубатурная формула
-def double_integral_quadrature(n=100):
-    """
-    Вычисление двойного интеграла по кубатурной формуле
-    """
-    R = 5  # радиус окружности
+import numpy as np
+from scipy.integrate import quad
+
+def double_integral_cubature(n=5):
+    R = 5  # Радиус окружности
+
+    def f(x, y):
+        return 1 / np.sqrt(24 + x**2 + y**2)
+
+    # Узлы (x, y) и веса w для квадратуры Гаусса
+    points, weights = np.polynomial.legendre.leggauss(n)  # Узлы и веса на интервале [-1, 1]
+    
+    # Преобразование узлов и весов для окружности радиуса R
+    points_x = points * R  # Масштабируем узлы на диапазон [-R, R]
+    weights_x = weights * R  # Масштабируем веса
+    points_y = points_x  # Окружность симметрична по x и y
+    weights_y = weights_x
+
+    # Считаем интеграл как сумму по узлам
     integral = 0
-    for i in range(n):
-        for j in range(n):
-            # Дискретизация
-            x = -R + 2 * R * i / n
-            y = -R + 2 * R * j / n
-            if x**2 + y**2 <= R**2:  # проверка, что точка внутри круга
-                f = 1 / np.sqrt(24 + x**2 + y**2)
-                dA = (2 * R / n) ** 2  # площадь элемента
-                integral += f * dA
+    for i, y in enumerate(points_y):
+        for j, x in enumerate(points_x):
+            # Проверяем, чтобы точка находилась внутри круга
+            if x**2 + y**2 <= R**2:
+                integral += weights_x[j] * weights_y[i] * f(x, y)
     return integral
+
 
 # 2. Метод Симпсона
 def double_integral_simpson(n):
@@ -49,5 +59,5 @@ def double_integral_simpson(n):
     return integral
 
 # Проверка функций
-print("Кубатурная формула:", double_integral_quadrature(n=200))
+print("Кубатурная формула:", double_integral_cubature(n=200))
 print("Метод Симпсона:", double_integral_simpson(n=200))
