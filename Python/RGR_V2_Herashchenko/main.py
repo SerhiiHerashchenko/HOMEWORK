@@ -1,4 +1,7 @@
 import numpy as np
+from scipy.integrate import dblquad
+
+# ---------------- Кубатуры Симпсона ----------------
 
 def double_integral_cubature_simpson(n):
     R = 5  # Радиус окружности
@@ -41,7 +44,8 @@ def double_integral_cubature_simpson(n):
 
     return integral
 
-# 2. Метод Симпсона
+# ---------------- Метод Симпсона ----------------
+
 def double_integral_simpson(n):
     
     N = 2 * n
@@ -71,3 +75,22 @@ def double_integral_simpson(n):
 # Проверка функций
 print("Кубатурная формула:", double_integral_cubature_simpson(n=200))
 print("Метод Симпсона:", double_integral_simpson(n=200))
+
+# ---------------- Референсное значение ----------------
+
+def f(x, y):
+    return 1 / np.sqrt(24 + x**2 + y**2) # Функция под интегралом
+def output(x):
+    return np.sqrt(25 - x**2)  # Вычисление верхней границы по y, которая зависит от x
+def input(x):
+    return -np.sqrt(25 - x**2)  # Вычисление верхней границы по y, которая зависит от x
+
+# Функция для интегрирования по x
+def integrand(y, x):
+    if y**2 + x**2 <= 25:
+        return f(x, y)
+    return 0
+
+result, error = dblquad(integrand, -5, 5, lambda x: input(x), lambda x: output(x))
+
+print("Результат интеграла:", result)

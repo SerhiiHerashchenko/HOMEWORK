@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.integrate import dblquad
 
+# ---------------- Кубатуры Симпсона ----------------
+
 def double_integral_cubature_simpson(n):
     """
     Вычисление двойного интеграла методом кубатурной формулы Симпсона с улучшенной точностью.
@@ -43,7 +45,8 @@ def double_integral_cubature_simpson(n):
     
     return integral
 
-# 2. Метод Симпсона
+# ---------------- Метод Симпсона ----------------
+
 def double_integral_simpson(n):
     N = 2 * n  # Количество разбиений для более точного результата
 
