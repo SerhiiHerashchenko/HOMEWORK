@@ -1,43 +1,62 @@
 import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
+import sympy as sp
 
-# Задаем уравнение y''' + 3y'' + 8y - 2 = 0 в виде системы первого порядка
+# ======================================
+
+x = sp.symbols('x')
+C1, C2, C3 = sp.symbols('C1 C2 C3')
+y = sp.Function('y')
+
+eq = sp.Eq(y(x).diff(x, 3) + 3 * y(x).diff(x, 2) + 8 * y(x) - 2, 0)
+
+general_solution = sp.dsolve(eq)
+print(f"General solution:\n{general_solution} \n")
+
+y_general = general_solution.rhs
+
+ics = {
+    y(0): 3,
+    y(x).diff(x).subs(x, 0): -2,
+    y(x).diff(x, 2).subs(x, 0): 5,
+}
+
+constants = sp.solve([y_general.subs(x, 0) - 3,
+                      y_general.diff(x).subs(x, 0) + 2,
+                      y_general.diff(x, 2).subs(x, 0) - 5], [C1, C2, C3])
+
+specific_solution = y_general.subs(constants)
+print(f"Specific solution:\ny(x) = {specific_solution}")
+
+# ======================================
+
 def ode_system(t, y):
-    # y[0] = y, y[1] = y', y[2] = y''
-    dydt = [y[1],  # y' = y[1]
-            y[2],  # y'' = y[2]
-            -3*y[2] - 8*y[0] + 2]  # y''' = -3y'' - 8y + 2
+    dydt = [y[1],
+            y[2],
+            -3*y[2] - 8*y[0] + 2]
     return dydt
 
-# Начальные условия
-y0 = [3, -2, 5]  # y(0), y'(0), y''(0)
+y0 = [3, -2, 5]
 
-# Решаем задачу Коши на интервале [0, 10]
 t_span = (0, 10)
-t_eval = np.linspace(0, 10, 500)  # Точки, где вычисляем решение
-solution = solve_ivp(ode_system, t_span, y0, t_eval=t_eval, method='RK45')
+t = np.linspace(0, 10, 500)
+solution = solve_ivp(ode_system, t_span, y0, t_eval=t, method='RK45')
 
-# Извлекаем результаты
-t = solution.t
-y = solution.y[0]  # y(x)
-y_prime = solution.y[1]  # y'(x)
-y_double_prime = solution.y[2]  # y''(x)
+y = solution.y[0]
+y_prime = solution.y[1]
+y_double_prime = solution.y[2]
 
-# Построение графиков
+# ======================================
+
 plt.figure(figsize=(10, 6))
 
-# График y(x)
 plt.plot(t, y, label="y(x)", color='blue')
 
-# График y'(x)
 plt.plot(t, y_prime, label="y'(x)", color='green')
 
-# График y''(x)
 plt.plot(t, y_double_prime, label="y''(x)", color='red')
 
-# Настройки графиков
-plt.title("Решение задачи Коши и производные")
 plt.xlabel("x")
 plt.ylabel("y, y', y''")
 plt.axhline(0, color='black', linewidth=0.8, linestyle='--')

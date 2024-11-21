@@ -3,7 +3,7 @@ import numpy as np
 import numpy as np
 from scipy.integrate import quad
 
-def double_integral_cubature(n=5):
+def double_integral_cubature(n):
     R = 5  # Радиус окружности
 
     def f(x, y):
@@ -59,5 +59,5 @@ def double_integral_simpson(n):
     return integral
 
 # Проверка функций
-print("Кубатурная формула:", double_integral_cubature(n=200))
-print("Метод Симпсона:", double_integral_simpson(n=200))
+print("Кубатурная формула:", double_integral_cubature(n=2000))
+print("Метод Симпсона:", double_integral_simpson(n=2000))
