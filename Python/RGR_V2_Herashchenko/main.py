@@ -69,5 +69,5 @@ def double_integral_simpson(n):
     return integral
 
 # Проверка функций
-print("Кубатурная формула:", double_integral_cubature_simpson(n=2000))
+print("Кубатурная формула:", double_integral_cubature_simpson(n=200))
 print("Метод Симпсона:", double_integral_simpson(n=200))

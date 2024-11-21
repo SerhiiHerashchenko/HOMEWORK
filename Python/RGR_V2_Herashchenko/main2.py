@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.integrate import dblquad
 
 def double_integral_cubature_simpson(n):
     """
@@ -72,18 +73,14 @@ def double_integral_simpson(n):
 print("Результат кубатурной формулы:", double_integral_cubature_simpson(n=200))
 print("Результат метода Симпсона:", double_integral_simpson(n=200))
 
+# ---------------- Референсное значение ----------------
 
-
-import numpy as np
-from scipy.integrate import dblquad
-
-# Функция под интегралом
 def f(x, y):
-    return x**2 + y**2
-
-# Ограничения на область x^4 + y^4 <= 1
-def valid_area(x):
+    return x**2 + y**2 # Функция под интегралом
+def output(x):
     return np.sqrt(1 - x**4)  # Вычисление верхней границы по y, которая зависит от x
+def input(x):
+    return -np.sqrt(1 - x**4)  # Вычисление верхней границы по y, которая зависит от x
 
 # Функция для интегрирования по x
 def integrand(y, x):
@@ -91,9 +88,6 @@ def integrand(y, x):
         return f(x, y)
     return 0
 
-# Используем функцию dblquad для вычисления интеграла
-result, error = dblquad(integrand, -1, 1, lambda x: -valid_area(x), lambda x: valid_area(x))
+result, error = dblquad(integrand, -1, 1, lambda x: input(x), lambda x: output(x))
 
 print("Результат интеграла:", result)
-print("Оценка погрешности:", error)
-
