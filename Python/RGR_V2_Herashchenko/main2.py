@@ -1,52 +1,61 @@
 import numpy as np
 
-# 1. Кубатурная формула
-def double_integral_cubature(n):
+def double_integral_cubature_simpson(n):
     """
-    Вычисление двойного интеграла по кубатурной формуле для области x^4 + y^4 <= 1
+    Вычисление двойного интеграла методом кубатурной формулы Симпсона с улучшенной точностью.
     """
     def f(x, y):
-        return x**2 + y**2  # Новая функция интеграла
-
-    R = 1  # Радиус области (ограничение по x^4 + y^4 <= 1)
-
-    # Узлы (x, y) и веса w для квадратуры Гаусса
-    points, weights = np.polynomial.legendre.leggauss(n)  # Узлы и веса на интервале [-1, 1]
+        return x**2 + y**2  # Функция под интегралом
     
-    # Масштабируем узлы и веса для области x^4 + y^4 <= 1
-    points_x = points  # Узлы на интервале [-1, 1]
-    weights_x = weights  # Веса для квадратуры
-    points_y = points_x  # Используем те же узлы для y, так как область симметрична
-    weights_y = weights_x
+    a, A = -1, 1  # Границы интегрирования по x
+    b, B = -1, 1  # Границы интегрирования по y
 
-    # Считаем интеграл как сумму по узлам
+    # Шаги разбиения
+    h = (A - a) / (2 * n)  # Шаг по x
+    k = (B - b) / (2 * n)  # Шаг по y
+    
     integral = 0
-    for i, y in enumerate(points_y):
-        for j, x in enumerate(points_x):
-            # Проверяем, чтобы точка находилась внутри области x^4 + y^4 <= 1
-            if x**4 + y**4 <= 1:
-                integral += weights_x[j] * weights_y[i] * f(x, y)
+    
+    # Разбиваем область на прямоугольники и применяем формулу
+    for i in range(n):
+        for j in range(n):
+            # Границы текущего прямоугольника
+            x0, x2 = a + 2 * i * h, a + 2 * i * h + 2 * h
+            x1 = x0 + h
+            y0, y2 = b + 2 * j * k, b + 2 * j * k + 2 * k
+            y1 = y0 + k
+            
+            # Проверка всех точек (x0, y0), (x1, y0), (x0, y1), (x2, y0), (x2, y1), (x1, y2), (x0, y2), (x2, y2) на попадание в область
+            points = [(x0, y0), (x1, y0), (x0, y1), (x2, y0), (x2, y1), (x1, y2), (x0, y2), (x2, y2)]
+            if any(x**4 + y**4 > 1 for x, y in points):  # Если хотя бы одна точка выходит за границу, пропускаем этот прямоугольник
+                continue
+            
+            # Формула Симпсона на прямоугольнике
+            local_integral = (h * k / 9) * (
+                f(x0, y0) + f(x2, y0) + f(x0, y2) + f(x2, y2) +
+                4 * (f(x1, y0) + f(x0, y1) + f(x2, y1) + f(x1, y2)) +
+                16 * f(x1, y1)
+            )
+            
+            # Добавляем вклад от прямоугольника
+            integral += local_integral
     
     return integral
 
-
 # 2. Метод Симпсона
 def double_integral_simpson(n):
-    """
-    Вычисление двойного интеграла методом Симпсона для области x^4 + y^4 <= 1
-    """
     N = 2 * n  # Количество разбиений для более точного результата
 
     def f(x, y):
         return x**2 + y**2  # Новая функция интеграла
 
     R = 1  # Радиус области (ограничение по x^4 + y^4 <= 1)
-    
+
     # Внешний интеграл
     def simpson_outer(y):
         a, b = -np.sqrt(1 - y**4), np.sqrt(1 - y**4)  # Границы по x для данной y
         return simpson(lambda x: f(x, y), a, b, N)
-    
+
     # Функция Симпсона для одномерного интеграла
     def simpson(func, a, b, N):
         h = (b - a) / N  # Шаг разбиения
@@ -55,26 +64,36 @@ def double_integral_simpson(n):
         s += 4 * sum(func(x[1:N:2]))  # Сумма по нечётным индексам
         s += 2 * sum(func(x[2:N-1:2]))  # Сумма по чётным индексам
         return s * h / 3
-    
+
     # Внешний интеграл
     integral = simpson(simpson_outer, -R, R, N)
     return integral
 
-
-# Основная функция для вычисления обоих интегралов
-def calculate_integrals(n):
-    """
-    Вычисление двойных интегралов с использованием кубатурной формулы и метода Симпсона
-    """
-    cubature_result = double_integral_cubature(n)  # Кубатурная формула
-    simpson_result = double_integral_simpson(n)  # Метод Симпсона
-    
-    return cubature_result, simpson_result
+print("Результат кубатурной формулы:", double_integral_cubature_simpson(n=200))
+print("Результат метода Симпсона:", double_integral_simpson(n=200))
 
 
-# Проверка функции для различных n
-n = 2000  # Количество разбиений для лучшего результата
-cubature_result, simpson_result = calculate_integrals(n)
 
-print("Результат кубатурной формулы:", cubature_result)
-print("Результат метода Симпсона:", simpson_result)
+import numpy as np
+from scipy.integrate import dblquad
+
+# Функция под интегралом
+def f(x, y):
+    return x**2 + y**2
+
+# Ограничения на область x^4 + y^4 <= 1
+def valid_area(x):
+    return np.sqrt(1 - x**4)  # Вычисление верхней границы по y, которая зависит от x
+
+# Функция для интегрирования по x
+def integrand(y, x):
+    if y**4 + x**4 <= 1:
+        return f(x, y)
+    return 0
+
+# Используем функцию dblquad для вычисления интеграла
+result, error = dblquad(integrand, -1, 1, lambda x: -valid_area(x), lambda x: valid_area(x))
+
+print("Результат интеграла:", result)
+print("Оценка погрешности:", error)
+

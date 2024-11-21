@@ -1,41 +1,51 @@
 import numpy as np
 
-import numpy as np
-from scipy.integrate import quad
-
-def double_integral_cubature(n):
+def double_integral_cubature_simpson(n):
     R = 5  # Радиус окружности
 
     def f(x, y):
         return 1 / np.sqrt(24 + x**2 + y**2)
 
-    # Узлы (x, y) и веса w для квадратуры Гаусса
-    points, weights = np.polynomial.legendre.leggauss(n)  # Узлы и веса на интервале [-1, 1]
-    
-    # Преобразование узлов и весов для окружности радиуса R
-    points_x = points * R  # Масштабируем узлы на диапазон [-R, R]
-    weights_x = weights * R  # Масштабируем веса
-    points_y = points_x  # Окружность симметрична по x и y
-    weights_y = weights_x
+    # Границы интегрирования
+    a, A = -R, R
+    b, B = -R, R
 
-    # Считаем интеграл как сумму по узлам
+    # Шаги разбиения
+    h = (A - a) / (2 * n)
+    k = (B - b) / (2 * n)
+
     integral = 0
-    for i, y in enumerate(points_y):
-        for j, x in enumerate(points_x):
-            # Проверяем, чтобы точка находилась внутри круга
-            if x**2 + y**2 <= R**2:
-                integral += weights_x[j] * weights_y[i] * f(x, y)
-    return integral
 
+    # Цикл по всем прямоугольным ячейкам
+    for i in range(n):
+        for j in range(n):
+            # Границы текущего прямоугольника
+            x0, x2 = a + 2 * i * h, a + 2 * i * h + 2 * h
+            x1 = x0 + h
+            y0, y2 = b + 2 * j * k, b + 2 * j * k + 2 * k
+            y1 = y0 + k
+
+            # Проверка, чтобы узлы находились внутри круга
+            if x0**2 + y0**2 > R**2 or x2**2 + y2**2 > R**2:
+                continue
+
+            # Используем формулу Симпсона для текущего прямоугольника
+            local_integral = (h * k / 9) * (
+                f(x0, y0) + f(x2, y0) + f(x0, y2) + f(x2, y2) +
+                4 * (f(x1, y0) + f(x0, y1) + f(x2, y1) + f(x1, y2)) +
+                16 * f(x1, y1)
+            )
+
+            # Добавляем вклад от текущего прямоугольника
+            integral += local_integral
+
+    return integral
 
 # 2. Метод Симпсона
 def double_integral_simpson(n):
     
     N = 2 * n
 
-    """
-    Вычисление двойного интеграла методом Симпсона
-    """
     R = 5  # радиус окружности
     def f(x, y):
         return 1 / np.sqrt(24 + x**2 + y**2)
@@ -59,5 +69,5 @@ def double_integral_simpson(n):
     return integral
 
 # Проверка функций
-print("Кубатурная формула:", double_integral_cubature(n=2000))
-print("Метод Симпсона:", double_integral_simpson(n=2000))
+print("Кубатурная формула:", double_integral_cubature_simpson(n=2000))
+print("Метод Симпсона:", double_integral_simpson(n=200))
