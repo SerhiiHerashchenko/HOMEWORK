@@ -1,102 +1,109 @@
-class LongFloat:
-    def __init__(self, *args):
-        """
-        Конструктор класса LongFloat.
-        Принимает либо число с плавающей точкой (float), либо мантиссу (целое число), порядок и знак.
-        """
-        if len(args) == 1 and isinstance(args[0], float):
-            # Конструктор для числа с плавающей точкой
-            self._sign = -1 if args[0] < 0 else 1
-            abs_value = abs(args[0])
-            self._mantissa, self._exponent = self._float_to_mantissa_exponent(abs_value)
-        elif len(args) == 3:
-            # Конструктор для мантиссы, порядка и знака
-            self._mantissa, self._exponent, self._sign = args
-        else:
-            raise ValueError("Неправильное количество аргументов")
+import sys
+from PyQt5.QtWidgets import (
+    QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QPushButton, QLineEdit, 
+    QCheckBox, QRadioButton, QSlider, QComboBox, QMessageBox
+)
+from PyQt5.QtCore import Qt
 
-    def _float_to_mantissa_exponent(self, value):
-        """Преобразует число с плавающей точкой в мантиссу и показатель степени"""
-        exponent = 0
-        while value >= 10:
-            value /= 10
-            exponent += 1
-        while value < 1:
-            value *= 10
-            exponent -= 1
-        mantissa = int(value * 10**9)  # Делаем мантиссу целым числом с точностью до 9 знаков
-        return mantissa, exponent
 
-    def __str__(self):
-        """Возвращает строковое представление числа в формате <знак>0.<мантисса>E<степень>"""
-        return f"{'-' if self._sign == -1 else ''}0.{str(self._mantissa).zfill(9)}E{self._exponent:+03d}"
-
-    # Сравнение
-    def __lt__(self, other):
-        return self._compare(other) < 0
-
-    def __le__(self, other):
-        return self._compare(other) <= 0
-
-    def __eq__(self, other):
-        return self._compare(other) == 0
-
-    def _compare(self, other):
-        """Сравнение двух объектов LongFloat"""
-        if not isinstance(other, LongFloat):
-            raise ValueError("Сравнение возможно только с объектом LongFloat")
+class SurveyApp(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Оценка преподавания курса Python")
+        self.setGeometry(100, 100, 500, 400)
         
-        # Сравниваем мантиссу и показатель степени
-        if self._exponent != other._exponent:
-            return self._exponent - other._exponent
-        return self._mantissa - other._mantissa
+        self.init_ui()
 
-    # Арифметическая операция сложения
-    def __add__(self, other):
-        if not isinstance(other, LongFloat):
-            raise ValueError("Сложение возможно только с объектом LongFloat")
-        
-        # Приводим к одинаковому порядку степеней
-        if self._exponent > other._exponent:
-            mantissa_self = self._mantissa
-            mantissa_other = other._mantissa * (10 ** (self._exponent - other._exponent))
-            exponent = self._exponent
+    def init_ui(self):
+        # Основной виджет
+        self.central_widget = QWidget(self)
+        self.setCentralWidget(self.central_widget)
+
+        # Макет для размещения виджетов
+        layout = QVBoxLayout()
+
+        # Вопрос 1: Как вас зовут? (Текстовое поле)
+        layout.addWidget(QLabel("1. Как вас зовут?"))
+        self.name_input = QLineEdit(self)
+        layout.addWidget(self.name_input)
+
+        # Вопрос 2: Вам понравился курс? (Флажки)
+        layout.addWidget(QLabel("2. Вам понравился курс?"))
+        self.like_check = QCheckBox("Да, мне всё понравилось", self)
+        self.like_check2 = QCheckBox("Не всё понравилось, есть замечания", self)
+        layout.addWidget(self.like_check)
+        layout.addWidget(self.like_check2)
+
+        # Вопрос 3: Оцените качество преподавания (Радиокнопки)
+        layout.addWidget(QLabel("3. Как вы оцениваете качество преподавания?"))
+        self.radio_good = QRadioButton("Отлично", self)
+        self.radio_average = QRadioButton("Хорошо", self)
+        self.radio_poor = QRadioButton("Удовлетворительно", self)
+        layout.addWidget(self.radio_good)
+        layout.addWidget(self.radio_average)
+        layout.addWidget(self.radio_poor)
+
+        # Вопрос 4: Насколько сложным был курс? (Слайдер)
+        layout.addWidget(QLabel("4. Какой уровень сложности вы бы поставили курсу? (1 - Легкий, 10 - Очень сложный)"))
+        self.difficulty_slider = QSlider(Qt.Horizontal, self)
+        self.difficulty_slider.setMinimum(1)
+        self.difficulty_slider.setMaximum(10)
+        self.difficulty_slider.setValue(5)
+        layout.addWidget(self.difficulty_slider)
+
+        # Вопрос 5: Что вы хотите улучшить? (Выпадающий список)
+        layout.addWidget(QLabel("5. Что бы вы хотели улучшить?"))
+        self.improve_combo = QComboBox(self)
+        self.improve_combo.addItems([
+            "Больше практических задач",
+            "Лучше объяснять теорию",
+            "Добавить материалы для самостоятельного изучения",
+            "Улучшить обратную связь от преподавателя"
+        ])
+        layout.addWidget(self.improve_combo)
+
+        # Кнопка отправки
+        self.submit_button = QPushButton("Отправить", self)
+        self.submit_button.clicked.connect(self.show_result)
+        layout.addWidget(self.submit_button)
+
+        # Устанавливаем макет
+        self.central_widget.setLayout(layout)
+
+    def show_result(self):
+        # Сбор ответов
+        name = self.name_input.text()
+        like = self.like_check.isChecked()
+        like_partial = self.like_check2.isChecked()
+
+        if self.radio_good.isChecked():
+            quality = "Отлично"
+        elif self.radio_average.isChecked():
+            quality = "Хорошо"
+        elif self.radio_poor.isChecked():
+            quality = "Удовлетворительно"
         else:
-            mantissa_self = self._mantissa * (10 ** (other._exponent - self._exponent))
-            mantissa_other = other._mantissa
-            exponent = other._exponent
+            quality = "Не выбрано"
 
-        # Сложение мантисс с учетом знаков
-        mantissa_result = mantissa_self + mantissa_other
-        sign = 1 if mantissa_result >= 0 else -1
-        mantissa_result = abs(mantissa_result)
+        difficulty = self.difficulty_slider.value()
+        improve = self.improve_combo.currentText()
 
-        # Нормализация
-        while mantissa_result >= 10**9:
-            mantissa_result //= 10
-            exponent += 1
-        while mantissa_result < 10**8:
-            mantissa_result *= 10
-            exponent -= 1
+        # Создаем сообщение с результатами
+        result = (
+            f"Спасибо за участие, {name}!\n\n"
+            f"Ваши ответы:\n"
+            f"- Курс понравился: {'Да' if like else 'Нет' if not like_partial else 'Частично'}\n"
+            f"- Качество преподавания: {quality}\n"
+            f"- Уровень сложности: {difficulty}\n"
+            f"- Что вы хотите улучшить: {improve}"
+        )
 
-        return LongFloat(mantissa_result * sign, exponent, sign)
+        # Показываем сообщение
+        QMessageBox.information(self, "Результаты опроса", result)
 
 
-# Пример использования
 if __name__ == "__main__":
-    # Пример чисел с плавающей точкой
-    num1 = LongFloat(-0.864197532E+10)
-    num2 = LongFloat(4.5)
-
-    # Строковое представление
-    print("Число 1:", num1)
-    print("Число 2:", num2)
-
-    # Сравнение чисел
-    print("num1 < num2:", num1 < num2)
-    print("num1 <= num2:", num1 <= num2)
-    print("num1 == num2:", num1 == num2)
-
-    # Сложение чисел
-    sum_result = num1 + num2
-    print("Сумма чисел:", sum_result)
+    app = QApplication(sys.argv)
+    window = SurveyApp()
+    window.show()
+    sys.exit(app.exec_())

@@ -20,8 +20,8 @@ outliers_iqr = ((df < (Q1 - 1.5 * IQR)) | (df > (Q3 + 1.5 * IQR)))
 
 # 4. Определение выбросов с использованием статистических функций (метод на основе среднеквадратичного отклонения)
 MX = df.mean()
-X = df.std()
-outliers_stat = (df - MX).abs() > 3 * X
+SIGMA = df.std()
+outliers_stat = (df - MX).abs() > 3 * SIGMA
 
 # 5. Объединение выбросов (с учетом обоих методов)
 outliers_combined = outliers_iqr & outliers_stat
