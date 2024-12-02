@@ -1,7 +1,11 @@
+from matplotlib import pyplot as plt
 import numpy as np
 from scipy.integrate import dblquad
 
 # ---------------- Кубатуры Симпсона ----------------
+
+def f(x, y):
+        return x**2 + y**2
 
 def double_integral_cubature_simpson(n):
     """
@@ -56,8 +60,8 @@ def double_integral_simpson(n):
     R = 1  # Радиус области (ограничение по x^4 + y^4 <= 1)
 
     # Внешний интеграл
-    def simpson_outer(y):
-        a, b = -np.sqrt(1 - y**4), np.sqrt(1 - y**4)  # Границы по x для данной y
+    def simpson_inner(y):
+        a, b = -np.power(1 - y**4, 1/4), np.power(1 - y**4, 1/4)  # Границы по x для данной y
         return simpson(lambda x: f(x, y), a, b, N)
 
     # Функция Симпсона для одномерного интеграла
@@ -70,20 +74,20 @@ def double_integral_simpson(n):
         return s * h / 3
 
     # Внешний интеграл
-    integral = simpson(simpson_outer, -R, R, N)
+    integral = simpson(simpson_inner, -R, R, N)
     return integral
 
-print("Результат кубатурной формулы:", double_integral_cubature_simpson(n=200))
-print("Результат метода Симпсона:", double_integral_simpson(n=200))
+print("Результат кубатурной формулы:", double_integral_cubature_simpson(n=1000))
+print("Результат метода Симпсона:", double_integral_simpson(n=1000))
 
 # ---------------- Референсное значение ----------------
 
 def f(x, y):
     return x**2 + y**2 # Функция под интегралом
 def output(x):
-    return np.sqrt(1 - x**4)  # Вычисление верхней границы по y, которая зависит от x
+    return np.power(1 - x**4, 1/4)  # Вычисление верхней границы по y, которая зависит от x
 def input(x):
-    return -np.sqrt(1 - x**4)  # Вычисление верхней границы по y, которая зависит от x
+    return -np.power(1 - x**4, 1/4)  # Вычисление верхней границы по y, которая зависит от x
 
 # Функция для интегрирования по x
 def integrand(y, x):
@@ -94,3 +98,25 @@ def integrand(y, x):
 result, error = dblquad(integrand, -1, 1, lambda x: input(x), lambda x: output(x))
 
 print("Результат интеграла:", result)
+
+# ---------------- График ----------------
+
+R = 1
+
+x = np.linspace(-R, R, 200)
+y = np.linspace(-R, R, 200)
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)
+
+mask = X**4 + Y**4 > R**2
+Z[mask] = np.nan
+
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z, cmap='viridis', edgecolor='none', alpha=0.9)
+
+ax.set_title("Graph", fontsize=16)
+ax.set_xlabel("X", fontsize=12)
+ax.set_ylabel("Y", fontsize=12)
+ax.set_zlabel("f(x, y)", fontsize=12)
+plt.show()
