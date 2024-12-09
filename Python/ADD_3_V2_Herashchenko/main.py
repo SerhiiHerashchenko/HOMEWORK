@@ -24,7 +24,7 @@ def svd_compression(image_channel, num_singular_values):
     S[num_singular_values:] = 0
     return np.dot(U, np.dot(np.diag(S), Vt))
 
-svd_rank = -1
+svd_rank = 10
 compressed_channels = [svd_compression(image[:, :, i], svd_rank) for i in range(3)]
 image_compressed = np.stack(compressed_channels, axis=2)
 
