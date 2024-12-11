@@ -45,12 +45,12 @@ def gauss_quadrature(f, a, b, n):
 
 # ------------------ Example ------------------
 
-n = 3
+n = 4
 degree = 2 * n - 1
 f = lambda x: x**degree + 5*x**(degree-1)-3*x**3
 
-a = 0
-b = 1
+a = -2
+b = 3
 gauss_result = gauss_quadrature(f, a, b, n)
 print("Gauss quadrature formula:", gauss_result)
 
