@@ -2,7 +2,7 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy as np
 
-image_path = "C://Users//tiko1//Documents//GitHub//HOMEWORK//Python//ADD_3_V2_Herashchenko//image.jpg"
+image_path = "C:\\ALL\\GitHub repositories\\HOMEWORK\\Python\\ADD_3_V2_Herashchenko\\image.jpg"
 image = mpimg.imread(image_path)
 
 if image.max() > 1:

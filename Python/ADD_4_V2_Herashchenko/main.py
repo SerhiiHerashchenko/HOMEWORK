@@ -1,7 +1,6 @@
 import pandas as pd
 
-
-df = pd.read_csv('C://Users//tiko1//Documents//GitHub//HOMEWORK//Python//ADD_4//diabetes_changed.csv')
+df = pd.read_csv('C:\\ALL\\GitHub repositories\\HOMEWORK\\Python\\ADD_4_V2_Herashchenko\\diabetes_changed.csv')
 
 df = df.drop_duplicates()
 
