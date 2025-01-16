@@ -1,0 +1,15 @@
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\bin\Debug\net9.0\test1.exe
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\bin\Debug\net9.0\test1.deps.json
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\bin\Debug\net9.0\test1.runtimeconfig.json
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\bin\Debug\net9.0\test1.dll
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\bin\Debug\net9.0\test1.pdb
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\test1.GeneratedMSBuildEditorConfig.editorconfig
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\test1.AssemblyInfoInputs.cache
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\test1.AssemblyInfo.cs
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\test1.csproj.CoreCompileInputs.cache
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\test1.sourcelink.json
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\test1.dll
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\refint\test1.dll
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\test1.pdb
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\test1.genruntimeconfig.cache
+C:\ALL\GitHub repositories\HOMEWORK\C#\test1\obj\Debug\net9.0\ref\test1.dll
