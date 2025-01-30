@@ -74,13 +74,14 @@ class MainClass{
         System.out.println("");
 
         // #8
-        System.out.println("TASK 8:");
+        
+        // System.out.println("TASK 8:");
 
-        System.out.println("Before " + colors);
-        Collections.sort(colors, new MyComparator());
-        System.out.println("After " + colors);
+        // System.out.println("Before " + colors);
+        // Collections.sort(colors, new MyComparator());
+        // System.out.println("After " + colors);
 
-        System.out.println("");
+        // System.out.println("");
 
         // #9
         System.out.println("TASK 9:");

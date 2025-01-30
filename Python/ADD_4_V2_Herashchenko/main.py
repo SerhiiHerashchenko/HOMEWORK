@@ -23,4 +23,4 @@ df[outliers_combined] = df[outliers_combined].apply(lambda col: col.fillna(col.m
 
 print(df)
 
-df.to_csv('diabetes_cleaned.csv', index=False)
+df.to_csv('C:\ALL\GitHub repositories\HOMEWORK\Python\ADD_4_V2_Herashchenko\diabetes_cleaned.csv', index=False)
