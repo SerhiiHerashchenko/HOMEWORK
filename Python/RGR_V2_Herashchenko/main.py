@@ -6,7 +6,7 @@ from mpl_toolkits.mplot3d import Axes3D
 def f(x, y):
     return 1 / np.sqrt(24 + x**2 + y**2)
 
-# ---------------- Кубатуры Симпсона ----------------
+# ---------------- Кубатурый метод Симпсона ----------------
 
 def double_integral_cubature_simpson(n):
     R = 5
@@ -42,7 +42,7 @@ def double_integral_cubature_simpson(n):
 
     return integral
 
-# ---------------- Метод Симпсона ----------------
+# ---------------- Составной квадратурный метод Симпсона ----------------
 
 def double_integral_simpson(n):
     
