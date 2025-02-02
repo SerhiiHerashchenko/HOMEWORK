@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <C:\Users\tiko1\Documents\GitHub\HOMEWORK\C++\Module_Designe\src\data\processData\DataProcessorInterface.h>
+#include <C:\ALL\GitHub repositories\HOMEWORK\C++\Module_Designe\src\data\processData\DataProcessorInterface.h>
 
 using namespace std;
 
