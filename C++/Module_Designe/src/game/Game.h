@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
-#include <C:\ALL\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\StringPlayer.h>
-#include <C:\ALL\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\PlayerInterface.h>
-#include <C:\ALL\GitHub repositories\HOMEWORK\C++\Module_Designe\src\game\gameProcessor\Processor.h>
+#include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\StringPlayer.h>
+#include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\PlayerInterface.h>
+#include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\game\gameProcessor\Processor.h>
 
 class Game{
 public:

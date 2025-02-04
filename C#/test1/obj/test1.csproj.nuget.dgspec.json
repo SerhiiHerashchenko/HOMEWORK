@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\ALL\\GitHub repositories\\HOMEWORK\\C#\\test1\\test1.csproj": {}
+    "C:\\ALL\\FOR-CODING\\GitHub repositories\\HOMEWORK\\C#\\test1\\test1.csproj": {}
   },
   "projects": {
-    "C:\\ALL\\GitHub repositories\\HOMEWORK\\C#\\test1\\test1.csproj": {
+    "C:\\ALL\\FOR-CODING\\GitHub repositories\\HOMEWORK\\C#\\test1\\test1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\ALL\\GitHub repositories\\HOMEWORK\\C#\\test1\\test1.csproj",
+        "projectUniqueName": "C:\\ALL\\FOR-CODING\\GitHub repositories\\HOMEWORK\\C#\\test1\\test1.csproj",
         "projectName": "test1",
-        "projectPath": "C:\\ALL\\GitHub repositories\\HOMEWORK\\C#\\test1\\test1.csproj",
+        "projectPath": "C:\\ALL\\FOR-CODING\\GitHub repositories\\HOMEWORK\\C#\\test1\\test1.csproj",
         "packagesPath": "C:\\Users\\tiko1\\.nuget\\packages\\",
-        "outputPath": "C:\\ALL\\GitHub repositories\\HOMEWORK\\C#\\test1\\obj\\",
+        "outputPath": "C:\\ALL\\FOR-CODING\\GitHub repositories\\HOMEWORK\\C#\\test1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\tiko1\\AppData\\Roaming\\NuGet\\NuGet.Config"

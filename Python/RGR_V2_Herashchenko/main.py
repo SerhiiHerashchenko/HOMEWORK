@@ -67,7 +67,7 @@ def double_integral_simpson(n):
     integral = simpson(simpson_outer, -R, R, N)
     return integral
 
-n=150
+n=15
 print(f"n = {n}")
 print("Кубатурная формула:", double_integral_cubature_simpson(n))
 print("Метод Симпсона:", double_integral_simpson(n))
