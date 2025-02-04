@@ -1,3 +1,7 @@
+#ifndef DATAPROCESSORINTERFACE_H
+#define DATAPROCESSORINTERFACE_H
+
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -7,3 +11,5 @@ public:
     virtual string getData() = 0;
     virtual void readData() = 0;
 };
+
+#endif
