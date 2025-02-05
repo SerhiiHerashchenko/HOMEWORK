@@ -7,10 +7,16 @@ using namespace std;
 
 class StringPlayer : public PlayerInterface{
 public:
-    StringPlayer(string id, string name): id(id),name(name){}
+    StringPlayer(string id, string name){
+        this->id = id;
+        this->name = name;
+        data = new StringDataProcessor();
+    }
+    ~StringPlayer(){
+        delete data;
+    }
 
     virtual string makeMove(){
-        StringDataProcessor* data = new StringDataProcessor();
         data->readData();
         return data->getData();
     }
@@ -19,6 +25,7 @@ public:
     virtual string getName() { return this->name; }
 
 private:
+    StringDataProcessor* data;
     string id;
     string name;
 };

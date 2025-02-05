@@ -3,28 +3,46 @@
 #include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\StringPlayer.h>
 #include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\PlayerInterface.h>
 #include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\game\gameProcessor\Processor.h>
+#include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\data\processData\BannerProcessor.h>
 
 class Game{
 public:
     Game(string id, string name){
+        processor = new Processor;
         player = new StringPlayer(id, name);
+        guessed_number = processor->random_int(1, 99);
+    }
+    ~Game(){
+        delete processor;
+        delete player;
     }
 
-    void play(){
+    bool play(){
+        cout << "Let's get ready to rumble!\n";
         while (!is_winner){
             try{
                 string current_move_str = player->makeMove();
                 int current_move_int = stoi(current_move_str);
-                Processor* p = new Processor;
-                //////Random value
-                int magic_number = 0;
+
+                int magic_number = processor->random_int(1, 9);
                 if(magic_counter < 4 && (magic_number == 3 || magic_number == 7))
                     magic_counter++;
-                //////
-                EGLU condition = p->compare(current_move_int, guessed_number, magic_counter, magic_number);
+
+                EGLU condition = processor->compare(current_move_int, guessed_number, magic_counter, magic_number);
                 if(condition == EQUALS){
                     is_winner = true;
-                    cout << "Yes, finally, you pick the right number. That didn't take a centure\n"; 
+                    cout << "Yes, finally, you pick the right number. That didn't take a centure\n";
+                    BannerProcessor* bp = new BannerProcessor();
+                    bp->readData("C:/ALL/FOR-CODING/GitHub repositories/HOMEWORK/C++/Module_Designe/src/resources/Winner_Banner.txt");
+                    cout << bp->getData();
+                    cout << "Do you want to continue playing?\nY:1/N:0\n";
+                    
+                    cin >> is_winner;
+                    if (!is_winner){
+                        cout << "Thank you for playing!";
+                        return false;
+                    }
+                    return true;
                 }
                 else if(condition == GREATER)
                     cout << "Your number is greater than I guessed. Try again!\n"; 
@@ -35,10 +53,12 @@ public:
                 cout << "Enter correct number, you've written something wrong\n";
             }
         }
+        return false;
     }
 private:
+    Processor* processor;
     PlayerInterface* player;
-    int guessed_number = 16;
+    int guessed_number;
     int magic_counter;
     bool is_winner = false;
 };

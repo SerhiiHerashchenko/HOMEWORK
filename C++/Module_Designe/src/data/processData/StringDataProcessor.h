@@ -6,7 +6,7 @@ using namespace std;
 
 class StringDataProcessor:DataProcessorInterface{
 public:
-    virtual void readData() { cin >> data; }
+    virtual void readData(string path = "") { cin >> data; }
     virtual string getData() { return data; }
     
 private:
