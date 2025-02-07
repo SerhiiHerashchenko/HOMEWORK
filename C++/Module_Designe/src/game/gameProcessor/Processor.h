@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\game\gameProcessor\EGLU.h>
 
 class Processor{

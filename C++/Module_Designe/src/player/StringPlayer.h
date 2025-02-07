@@ -1,4 +1,3 @@
-#include <iostream>
 #include <string>
 #include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\data\processData\StringDataProcessor.h>
 #include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\PlayerInterface.h>

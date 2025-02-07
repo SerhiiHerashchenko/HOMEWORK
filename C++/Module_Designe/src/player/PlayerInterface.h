@@ -1,7 +1,6 @@
 #ifndef PLAYERINTERFACE_H
 #define PLAYERINTERFACE_H
 
-#include <iostream>
 #include <string>
 
 using namespace std;

@@ -7,7 +7,7 @@ using namespace std;
 class DataProcessorInterface{
 public:
     virtual string getData() = 0;
-    virtual void readData(string path) = 0;
+    virtual void readData(string path = 0) = 0;
 };
 
 #endif
