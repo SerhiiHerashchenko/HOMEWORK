@@ -8,19 +8,19 @@ using namespace std;
 
 class BattleshipProcessor{
 public:
-    BattleshipProcessor(ConsolePlayer* player, ConsolePlayer* opponent){
-        this->player = player;
-        this->opponent = opponent;
-    }
-
     int random_int(int start, int end){
         srand(time(0));
         return rand() % (end - start + 1) + start;
     }
 
-    bool check_move(string move){
-
+    pair<int, int> str_to_int_coordinates(string point){
+        int x = point[0] - '0' - 48;
+        int y = point[0] - '0';
+        pair<int, int> p(x, y);
+        return p;
     }
+
+    bool check_move(string move){ }
 
     int** map_generator(){
         int** map = new int*[10];
@@ -29,9 +29,6 @@ public:
             for (int j = 0; j < 10; j++)
                 map[i][j] = 0;
         }
-        
-    };
-private:
-    ConsolePlayer* player;
-    ConsolePlayer* opponent;
+        return map;
+    }
 };
