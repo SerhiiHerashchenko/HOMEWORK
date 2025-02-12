@@ -10,7 +10,7 @@ public:
     ConsoleGame(string player_name){
         this->player = new ConsolePlayer(player_name);
         this->opponent = new ConsolePlayer("opponent");
-        this->processor = new BattleshipProcessor(player, opponent);
+        this->processor = new BattleshipProcessor();
 
     }
     virtual bool play(){
