@@ -15,7 +15,7 @@ def legendre_poly(n, x):
     P_prev2 = P_0
     P_prev1 = P_1
     
-    for i in range(2, n + 1):
+    for i in range(2, int(n + 1)):
         P_current = ((2 * i - 1) * x * P_prev1 - (i - 1) * P_prev2) / i
         P_prev2 = P_prev1
         P_prev1 = P_current
@@ -33,17 +33,19 @@ def gauss_quadrature(f, a, b, n):
     roots = [float(root) for root in roots]
     
     weights = []
+    roots_transformed = []
     for root in roots:
         weight = 2 / ((1 - root**2) * (sp.diff(legendre_poly_expr, x).subs(x, root))**2)
         weights.append(float(weight))
-    
-    roots_transformed = [0.5 * (root + 1) * (b - a) + a for root in roots]
-    weights_transformed = [0.5 * weight * (b - a) for weight in weights]
-    
-    integral = sum(weights_transformed[i] * f(roots_transformed[i]) for i in range(n))
-    return integral
+        roots_transformed.append(0.5 * (root) * (b - a) + (b + a) * 0.5)
 
-# ------------------ Example ------------------
+    integral = 0
+    for i in range(int(n)):
+        integral += weights[i] * f(roots_transformed[i])
+
+    return ((b - a) / 2) * integral
+
+# ------------------ My Integral ------------------
 
 eps = 0.001
 
@@ -52,9 +54,7 @@ f = lambda x: sp.sin(x) / (2 + sp.sin(x))
 a = 0
 b = sp.pi / 2
 
-h = sp.root(eps, 4)
-
-n = sp.floor((b - a) / h)
+n = 5
 
 h = (b - a) / n
 
@@ -66,14 +66,16 @@ gauss_result_h = gauss_quadrature(f, a, b, n)
 gauss_result_2h = gauss_quadrature(f, a, b, n/2)
 
 E = abs(gauss_result_h - gauss_result_2h) / (2**(alg_presicion) - 1)
+print("Error:", E.evalf())
 
 while E >= eps:
     print(abs(gauss_result_h - gauss_result_2h) / (2**(alg_presicion) - 1))
     h = h / 2
-    n = sp.floor((b - a) / h)
+    n = 2 * n
     gauss_result_h = gauss_quadrature(f, a, b, n)
     gauss_result_2h = gauss_quadrature(f, a, b, n/2)
     E = abs(gauss_result_h - gauss_result_2h) / (2**(alg_presicion) - 1)
+    print("Error:", E.evalf())
 
 print("Gauss quadrature formula(h):", round(gauss_result_h.evalf(), 4))
 print("Gauss quadrature formula(2h):", round(gauss_result_2h.evalf(), 4))

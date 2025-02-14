@@ -21,15 +21,14 @@ def Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k):
     integral *= (h * k)
     return integral
 
-# ------------------ Task 2 ------------------
+# ------------------ My Integral ------------------
 
 eps = 0.001
 
-# Define function using numpy operations
-f = lambda x, y: 2 * x * np.sin(x * y)
+f = lambda x, y: 2 * x * sp.sin(x * y)
 
 a, A = 0, 1
-b, B = 0, np.pi / 2
+b, B = 0, sp.pi / 2
 
 n, m = 10, 10
 h, k = (A - a) / n, (B - b) / m
@@ -43,6 +42,7 @@ fi_h = Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k)
 fi_2h = Trapezoidal_cubature_rule(f, a, A, b, B, n/2, m/2, 2*h, 2*k)
 
 E = abs(fi_h - fi_2h) / (2**alg_precision - 1)
+print("Error:", E.evalf())
 
 while E >= eps:
     h, k = h / 2, k / 2
@@ -50,15 +50,12 @@ while E >= eps:
     fi_h = Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k)
     fi_2h = Trapezoidal_cubature_rule(f, a, A, b, B, n/2, m/2, 2*h, 2*k)
     E = abs(fi_h - fi_2h) / (2**alg_precision - 1)
-    print("Error:", E)
+    print("Error:", E.evalf())
 
 print("Trapezoidal rule (h):", round(fi_h, 4))
 print("Trapezoidal rule (2h):", round(fi_2h, 4))
 
-# ------------------ Reference Exact Integral ------------------
-
 x, y = sp.symbols('x y')
-f_sym = 2 * x * sp.sin(x * y)
 
-exact_result = sp.integrate(f_sym, (y, 0, sp.pi / 2), (x, 0, 1))
+exact_result = sp.integrate(f(x, y), (y, 0, sp.pi / 2), (x, 0, 1))
 print("Reference (sympy):", exact_result.evalf())

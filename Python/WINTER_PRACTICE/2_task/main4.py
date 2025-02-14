@@ -18,7 +18,7 @@ def Composite_Simpson_rule(f, a, b, N, h):
 
     return (h / 3) * (integral)
 
-# ------------------ Task 2 ------------------
+# ------------------ My Integral ------------------
 
 eps = 0.001
 
@@ -27,7 +27,7 @@ f = lambda x: sp.sin(x) / (2 + sp.sin(x))
 a = 0
 b = sp.pi / 2
 
-n = 10
+n = 50
 
 N = 2 * n
 
@@ -38,16 +38,19 @@ alg_presicion = 3
 print("n = " + str(n))
 
 fi_h = Composite_Simpson_rule(f, a, b, N, h)
+print("Composite_Simpson_rule(h):", round(fi_h.evalf(), 4))
 fi_2h = Composite_Simpson_rule(f, a, b, N/2, 2*h)
 
 E = abs(fi_h - fi_2h) / (2**(alg_presicion) - 1)
+print("Error:", E.evalf())
+
 while E >= eps:
-    h = h / 2
-    n = sp.floor((b - a) / h)
-    fi_h = Composite_Simpson_rule(f, a, b, n, h)
-    fi_2h = Composite_Simpson_rule(f, a, b, n/2, 2 * h)
+    N = 2 * N
+    h = (b - a) / N
+    fi_h = Composite_Simpson_rule(f, a, b, int(N), h)
+    fi_2h = Composite_Simpson_rule(f, a, b, int(N / 2), h * 2)
     E = abs(fi_h - fi_2h) / (2**(alg_presicion) - 1)
-    print(E.evalf())
+    print("Error:", E.evalf())
 
 print("Composite_Simpson_rule(h):", round(fi_h.evalf(), 4))
 print("Composite_Simpson_rule(2h):", round(fi_2h.evalf(), 4))

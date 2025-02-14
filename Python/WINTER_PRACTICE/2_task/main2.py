@@ -13,7 +13,7 @@ def Riemann_midpoint_method(f, a, b, n, h):
 
     return integral
 
-# ------------------ Task 2 ------------------
+# ------------------ My Integral ------------------
 
 eps = 0.001
 
@@ -34,12 +34,15 @@ fi_h = Riemann_midpoint_method(f, a, b, n, h)
 fi_2h = Riemann_midpoint_method(f, a, b, n/2, 2*h)
 
 E = abs(fi_h - fi_2h) / (2**(alg_presicion) - 1)
+print("Error:", E.evalf())
+
 while E >= eps:
     h = h / 2
     n = sp.floor((b - a) / h)
     fi_h = Riemann_midpoint_method(f, a, b, n, h)
     fi_2h = Riemann_midpoint_method(f, a, b, n/2, 2 * h)
     E = abs(fi_h - fi_2h) / (2**(alg_presicion) - 1)
+    print("Error:", E.evalf())
 
 print("Riemann midpoint method(h):", round(fi_h.evalf(), 4))
 print("Riemann midpoint method(2h):", round(fi_2h.evalf(), 4))
