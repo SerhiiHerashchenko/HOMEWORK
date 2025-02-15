@@ -49,10 +49,15 @@ def gauss_quadrature(f, a, b, n):
 
 eps = 0.001
 
-f = lambda x: sp.sin(x) / (2 + sp.sin(x)) 
+# f = lambda x: sp.sin(x) / (2 + sp.sin(x)) 
 
-a = 0
-b = sp.pi / 2
+# a = 0
+# b = sp.pi / 2
+
+f = lambda x: (x*x - 2*x + 1) / (x + 1)
+
+a = 2
+b = 5
 
 n = 5
 
@@ -66,7 +71,7 @@ gauss_result_h = gauss_quadrature(f, a, b, n)
 gauss_result_2h = gauss_quadrature(f, a, b, n/2)
 
 E = abs(gauss_result_h - gauss_result_2h) / (2**(alg_presicion) - 1)
-print("Error:", E.evalf())
+print("Error:", E)
 
 while E >= eps:
     print(abs(gauss_result_h - gauss_result_2h) / (2**(alg_presicion) - 1))
@@ -75,10 +80,10 @@ while E >= eps:
     gauss_result_h = gauss_quadrature(f, a, b, n)
     gauss_result_2h = gauss_quadrature(f, a, b, n/2)
     E = abs(gauss_result_h - gauss_result_2h) / (2**(alg_presicion) - 1)
-    print("Error:", E.evalf())
+    print("Error:", E)
 
-print("Gauss quadrature formula(h):", round(gauss_result_h.evalf(), 4))
-print("Gauss quadrature formula(2h):", round(gauss_result_2h.evalf(), 4))
+print("Gauss quadrature formula(h):", round(gauss_result_h, 4))
+print("Gauss quadrature formula(2h):", round(gauss_result_2h, 4))
 
 x = sp.symbols('x')
 exact_result = sp.integrate(f(x), (x, a, b))

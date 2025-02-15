@@ -22,31 +22,14 @@ def legendre_poly(n, x):
     
     return P_current
 
-# ------------------ Gauss Quadrature Formula ------------------
-def gauss_quadrature_1d(f, a, b, n):
-    x = sp.symbols('x')
-    legendre_poly_expr = legendre_poly(n, x)
-    roots = sp.solvers.solve(legendre_poly_expr, x)
-    roots = [float(root) for root in roots]
-    
-    weights = []
-    for root in roots:
-        weight = 2 / ((1 - root**2) * (sp.diff(legendre_poly_expr, x).subs(x, root))**2)
-        weights.append(float(weight))
-    
-    # Change of variables
-    roots_transformed = [(b - a) / 2 * root + (b + a) / 2 for root in roots]
-    weights_transformed = [(b - a) / 2 * weight for weight in weights]
-    
-    integral = sum(weights_transformed[i] * f(roots_transformed[i]) for i in range(n))
-    return integral
-
 # ------------------ Gauss Quadrature for Double Integrals ------------------
 def gauss_quadrature_2d(f, a, A, b, B, n):
     x = sp.symbols('x')
     legendre_poly_expr = legendre_poly(n, x)
     roots = sp.solvers.solve(legendre_poly_expr, x)
     roots = [float(root) for root in roots]
+
+    print(n)
     
     weights = []
     x_roots_transformed = []
@@ -83,6 +66,9 @@ gauss_result_2h = gauss_quadrature_2d(f, a, A, b, B, int(n / 2))
 
 E = abs(gauss_result_h - gauss_result_2h) / (2**(alg_presicion) - 1)
 print("Error:", E.evalf())
+
+print("Gauss quadrature formula(h):", round(gauss_result_h.evalf(), 4))
+print("Gauss quadrature formula(2h):", round(gauss_result_2h.evalf(), 4))
 
 while E >= eps:
     n = 2 * n

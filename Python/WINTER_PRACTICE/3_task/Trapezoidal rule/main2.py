@@ -8,9 +8,9 @@ def Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k):
     y = b
     integral = 0
     w = 1
-    for i in range(int(n)):
+    for i in range(int(n) + 1):
         y = b
-        for j in range(int(m)):
+        for j in range(int(m) + 1):
             if (i > 0) & (i < n) & (j > 0) & (j < m) : w = 1
             elif (i==0 | i==n ) & (j==0 | j==m) : w = 0.25
             else : w = 0.5
@@ -30,7 +30,7 @@ f = lambda x, y: 2 * x * sp.sin(x * y)
 a, A = 0, 1
 b, B = 0, sp.pi / 2
 
-n, m = 10, 10
+n, m = 30, 30
 h, k = (A - a) / n, (B - b) / m
 
 alg_precision = 1
@@ -46,7 +46,7 @@ print("Error:", E.evalf())
 
 while E >= eps:
     h, k = h / 2, k / 2
-    n, m = int((A - a) / h), int((B - b) / k)
+    n, m = 2 * n, 2 * m
     fi_h = Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k)
     fi_2h = Trapezoidal_cubature_rule(f, a, A, b, B, n/2, m/2, 2*h, 2*k)
     E = abs(fi_h - fi_2h) / (2**alg_precision - 1)
