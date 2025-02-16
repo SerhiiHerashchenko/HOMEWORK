@@ -3,7 +3,6 @@ import sympy as sp
 # ------------------ Riemann midpoint method ------------------
 
 def Riemann_midpoint_method(f, a, b, n, m, h, k):
-
     x = a
     y = b
     integral = 0
@@ -26,7 +25,7 @@ f = lambda x, y: 2 * x * sp.sin(x * y)
 a, A = 0, 1
 b, B = 0, sp.pi / 2
 
-n, m = 30, 30
+n, m = 5, 5
 h, k = (A - a) / n, (B - b) / m
 
 alg_precision = 1
@@ -34,22 +33,24 @@ alg_precision = 1
 print("n =", n)
 print("m =", m)
 
-fi_h = Riemann_midpoint_method(f, a, b, n, m, h, k)
-fi_2h = Riemann_midpoint_method(f, a, b, n/2, m/2, 2*h, 2*k)
+result_h = Riemann_midpoint_method(f, a, b, n, m, h, k)
+result_2h = Riemann_midpoint_method(f, a, b, n/2, m/2, 2*h, 2*k)
 
-E = abs(fi_h - fi_2h) / (2**alg_precision - 1)
+E = abs(result_h - result_2h) / (2**alg_precision - 1)
 print("Error:", E.evalf())
 
+# ------------------ Runge Accuracy Control ------------------
 while E >= eps:
     h, k = h / 2, k / 2
     n, m = 2 * n, 2 * m
-    fi_h = Riemann_midpoint_method(f, a, b, n, m, h, k)
-    fi_2h = Riemann_midpoint_method(f, a, b, n/2, m/2, 2*h, 2*k)
-    E = abs(fi_h - fi_2h) / (2**alg_precision - 1)
+    result_h = Riemann_midpoint_method(f, a, b, n, m, h, k)
+    result_2h = Riemann_midpoint_method(f, a, b, n/2, m/2, 2*h, 2*k)
+    E = abs(result_h - result_2h) / (2**alg_precision - 1)
+    print("n =", n)
+    print("m =", m)
     print("Error:", E.evalf())
 
-print("Trapezoidal rule (h):", round(fi_h, 4))
-print("Trapezoidal rule (2h):", round(fi_2h, 4))
+print("Riemann midpoint method (h):", round(result_h, 4))
 
 x, y = sp.symbols('x y')
 

@@ -30,10 +30,13 @@ double Trapezoidal_cubature_rule(double f(double x, double y), double a, double 
     integral *= (h * k);
     return integral;
 }
+
 int main(){
     double eps = 0.001;
+
     double a = 0;
     double A = 1;
+
     double b = 0;
     double B = M_PI / 2;
 
@@ -47,12 +50,12 @@ int main(){
     cout << "n = " << n << "\n";
     cout << "m = " << m << "\n";
 
-    double fi_h = Trapezoidal_cubature_rule(func, a, A, b, B, n, m, h, k);
-    double fi_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n/2, m/2, 2*h, 2*k);
+    double result_h = Trapezoidal_cubature_rule(func, a, A, b, B, n, m, h, k);
+    double result_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n/2, m/2, 2*h, 2*k);
 
     cout << setprecision(4);
 
-    double E = abs(fi_h - fi_2h) / (pow(2, alg_precision) - 1);
+    double E = abs(result_h - result_2h) / (pow(2, alg_precision) - 1);
     cout << "Error: " << E << "\n";
 
     while(E >= eps){
@@ -60,10 +63,12 @@ int main(){
         k = k / 2, 
         n = 2 * n;
         m = 2 * m,
-        fi_h = Trapezoidal_cubature_rule(func, a, A, b, B, n, m, h, k);
-        fi_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n/2, m/2, 2*h, 2*k);
-        E = abs(fi_h - fi_2h) / (pow(2, alg_precision) - 1);
+        result_h = Trapezoidal_cubature_rule(func, a, A, b, B, n, m, h, k);
+        result_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n/2, m/2, 2*h, 2*k);
+        E = abs(result_h - result_2h) / (pow(2, alg_precision) - 1);
+        cout << "n = " << n << "\n";
+        cout << "m = " << m << "\n";        
         cout << "Error: " << E << "\n";
     }
-    cout << "Trapezoidal rule (h): " << fi_h << "\n";
+    cout << "Trapezoidal rule (h): " << result_h << "\n";
 }

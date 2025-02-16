@@ -1,4 +1,3 @@
-import numpy as np
 import sympy as sp
 # ------------------ Composite Simpson rule ------------------
 
@@ -8,7 +7,6 @@ def Composite_Simpson_rule(f, a, b, n, h):
     for i in range(1, int(n)):
         x = a + 2 * i * h
         integral += 2 * f(x)
-
 
     for i in range(1, int(n) + 1):
         x = a + (2 * i - 1) * h
@@ -28,7 +26,6 @@ a = 0
 b = sp.pi / 2
 
 n = 3
-
 N = 2 * n
 
 h = (b - a) / N
@@ -37,24 +34,24 @@ alg_presicion = 3
 
 print("n = " + str(n))
 
-fi_h = Composite_Simpson_rule(f, a, b, n, h)
-print("Composite_Simpson_rule(h):", round(fi_h.evalf(), 4))
-fi_2h = Composite_Simpson_rule(f, a, b, n/2, 2*h)
+result_h = Composite_Simpson_rule(f, a, b, n, h)
+result_2h = Composite_Simpson_rule(f, a, b, n/2, 2*h)
 
-E = abs(fi_h - fi_2h) / (2**(alg_presicion) - 1)
+E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
 print("Error:", E.evalf())
 
+# ------------------ Runge Accuracy Control ------------------
 while E >= eps:
     n *= 2
     N = 2 * n
     h = (b - a) / N
-    fi_h = Composite_Simpson_rule(f, a, b, n, h)
-    fi_2h = Composite_Simpson_rule(f, a, b, n / 2, h * 2)
-    E = abs(fi_h - fi_2h) / (2**(alg_presicion) - 1)
+    result_h = Composite_Simpson_rule(f, a, b, n, h)
+    result_2h = Composite_Simpson_rule(f, a, b, n / 2, h * 2)
+    E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
+    print("n = " + str(n))
     print("Error:", E.evalf())
 
-print("Composite_Simpson_rule(h):", round(fi_h.evalf(), 4))
-print("Composite_Simpson_rule(2h):", round(fi_2h.evalf(), 4))
+print("Composite Simpson rule(h):", round(result_h.evalf(), 4))
 
 x = sp.symbols('x')
 exact_result = sp.integrate(f(x), (x, a, b))

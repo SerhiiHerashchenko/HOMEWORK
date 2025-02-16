@@ -2,36 +2,34 @@
 #include <fstream>
 #include <cmath>
 
-const int NUM_POINTS = 50; // Количество точек по каждой оси
-const double X_MIN = -2, X_MAX = 2; // Границы x
-const double Y_MIN = -2 * M_PI, Y_MAX = 2 * M_PI; // Границы y
+using namespace std;
 
-// Функция для генерации данных
-void generate_data() {
-    std::ofstream file("data3d.txt"); // Открываем файл для записи
-    if (!file) {
-        std::cerr << "Ошибка: не удалось создать файл данных!" << std::endl;
-        return;
-    }
+double func(double x, double y) {
+    return 3 * x * x - 2 * sin(y) * sin(y);
+}
 
-    for (int i = 0; i < NUM_POINTS; ++i) {
-        double x = X_MIN + i * (X_MAX - X_MIN) / (NUM_POINTS - 1);
-        for (int j = 0; j < NUM_POINTS; ++j) {
-            double y = Y_MIN + j * (Y_MAX - Y_MIN) / (NUM_POINTS - 1);
-            double z = 3 * x * x - 2 * sin(y) * sin(y);
-            file << x << " " << y << " " << z << std::endl;
+void generate_data(double x_min, double x_max, double y_min, double y_max, int num_points, double (*func)(double, double)) {
+    ofstream file("data3d.txt");
+    for (int i = 0; i < num_points; ++i) {
+        double x = x_min + i * (x_max - x_min) / (num_points - 1);
+        for (int j = 0; j < num_points; ++j) {
+            double y = y_min + j * (y_max - y_min) / (num_points - 1);
+            double z = func(x, y);
+            file << x << " " << y << " " << z << endl;
         }
-        file << "\n"; // Разрыв строк для gnuplot
+        file << endl;
     }
 
     file.close();
 }
 
 int main() {
-    generate_data();
+    int num_points = 50;
+    double x_min = -2;
+    double x_max = 2;
+    double y_min = -2 * M_PI;
+    double y_max = 2 * M_PI;
+    generate_data(x_min, x_max, y_min, y_max, num_points, func);
 
-    // Запуск Gnuplot
-    system("gnuplot -persist -e \"set dgrid3d 50,50; set hidden3d; set title 'z = 3x^2 - 2sin^2(y)'; splot 'data3d.txt' with lines\"");
-
-    return 0;
+    system("gnuplot -persist -e \"set dgrid3d 50,50; set hidden3d; splot 'data3d.txt' with lines\"");
 }

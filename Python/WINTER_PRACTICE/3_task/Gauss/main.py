@@ -23,13 +23,11 @@ def legendre_poly(n, x):
     return P_current
 
 # ------------------ Gauss Quadrature for Double Integrals ------------------
-def gauss_quadrature_2d(f, a, A, b, B, n):
+def Gauss_Quadrature_2d(f, a, A, b, B, n):
     x = sp.symbols('x')
     legendre_poly_expr = legendre_poly(n, x)
     roots = sp.solvers.solve(legendre_poly_expr, x)
     roots = [float(root) for root in roots]
-
-    print(n)
     
     weights = []
     x_roots_transformed = []
@@ -49,6 +47,7 @@ def gauss_quadrature_2d(f, a, A, b, B, n):
 
 # ------------------ My Integral ------------------
 
+
 eps = 0.001
 
 f = lambda x, y: 2 * x * sp.sin(x * y)
@@ -61,24 +60,22 @@ alg_presicion = 2 * n - 1
 
 print("n =", n)
 
-gauss_result_h = gauss_quadrature_2d(f, a, A, b, B, n)
-gauss_result_2h = gauss_quadrature_2d(f, a, A, b, B, int(n / 2))
+result_h = Gauss_Quadrature_2d(f, a, A, b, B, n)
+result_2h = Gauss_Quadrature_2d(f, a, A, b, B, int(n / 2))
 
-E = abs(gauss_result_h - gauss_result_2h) / (2**(alg_presicion) - 1)
+E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
 print("Error:", E.evalf())
 
-print("Gauss quadrature formula(h):", round(gauss_result_h.evalf(), 4))
-print("Gauss quadrature formula(2h):", round(gauss_result_2h.evalf(), 4))
-
+# ------------------ Runge Accuracy Control ------------------
 while E >= eps:
     n = 2 * n
-    gauss_result_h = gauss_quadrature_2d(f, a, A, b, B, n)
-    gauss_result_2h = gauss_quadrature_2d(f, a, A, b, B, int(n / 2))
-    E = abs(gauss_result_h - gauss_result_2h) / (2**(alg_presicion) - 1)
+    result_h = Gauss_Quadrature_2d(f, a, A, b, B, n)
+    result_2h = Gauss_Quadrature_2d(f, a, A, b, B, int(n / 2))
+    E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
+    print("n =", n)
     print("Error:", E.evalf())
 
-print("Gauss quadrature formula(h):", round(gauss_result_h.evalf(), 4))
-print("Gauss quadrature formula(2h):", round(gauss_result_2h.evalf(), 4))
+print("Gauss quadrature formula(h):", round(result_h.evalf(), 4))
 
 x, y = sp.symbols('x y')
 exact_result = sp.integrate(f(x, y), (x, a, A), (y, b, B))

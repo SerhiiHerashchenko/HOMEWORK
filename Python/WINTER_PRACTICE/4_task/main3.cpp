@@ -2,31 +2,22 @@
 #include <fstream>
 #include <cmath>
 
-const double PI = M_PI;
-const int NUM_POINTS = 5000; // Количество точек
+using namespace std;
 
-// Параметр лемнискаты
-const double a = 3;
+void generate_data(double a, double num_points) {
+    ofstream file("data.txt");
 
-// Функция генерации точек
-void generate_data() {
-    std::ofstream file("data.txt"); // Открываем файл для записи
-    if (!file) {
-        std::cerr << "Ошибка: не удалось создать файл данных!" << std::endl;
-        return;
-    }
+    for (int i = 0; i < num_points; ++i) {
+        double theta = -M_PI + i * (2 * M_PI) / (num_points - 1);
+        double r2 = 2 * a * a * cos(2 * theta);
 
-    for (int i = 0; i < NUM_POINTS; ++i) {
-        double theta = -PI + i * (2 * PI) / (NUM_POINTS - 1); // Углы от -π до π
-        double r2 = 2 * a * a * cos(2 * theta); // r^2 = 2a^2 cos(2θ)
-
-        if (r2 > 0) { // Проверяем, что r² > 0 (иначе r не определён)
+        if (r2 > 0) {
             double r = sqrt(r2);
             double x = r * cos(theta);
             double y = r * sin(theta);
-            file << x << " " << y << std::endl;
+            file << x << " " << y << endl;
         } else {
-            file << "\n"; // Добавляем пустую строку для разрыва
+            file << endl;
         }
     }
 
@@ -34,10 +25,10 @@ void generate_data() {
 }
 
 int main() {
-    generate_data();
+    int num_points = 100;
+    double a = 3;
 
-    // Запуск gnuplot
-    system("gnuplot -persist -e \"set title 'Лемниската Бернулли (a=3)'; set grid; plot 'data.txt' with linespoints pointtype 7 linecolor 'blue'\"");
+    generate_data(a, num_points);
 
-    return 0;
+    system("gnuplot -persist -e \"set title 'Lemniscate of Bernoulli'; set grid; plot 'data.txt' with linespoints pointtype 7 linecolor 'blue'\"");
 }

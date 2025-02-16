@@ -2,18 +2,15 @@
 #include <fstream>
 #include <cmath>
 
-void generate_data(double (*f)(double), double a, double b, int num_points) {
-    std::ofstream file("data.txt"); // Файл с данными
-    if (!file) {
-        std::cerr << "Ошибка: не удалось создать файл данных!" << std::endl;
-        return;
-    }
+using namespace std;
 
-    // Разбиваем отрезок [a, b] на num_points точек
+void generate_data(double (*f)(double), double a, double b, int num_points) {
+    ofstream file("data.txt");
+    
     for (int i = 0; i < num_points; ++i) {
         double x = a + i * (b - a) / (num_points - 1);
         double y = f(x);
-        file << x << " " << y << std::endl;
+        file << x << " " << y << endl;
     }
 
     file.close();
@@ -21,16 +18,16 @@ void generate_data(double (*f)(double), double a, double b, int num_points) {
 
 double func(double x) {
     // return exp(sin(x));
-    // return exp(cos(x));
-    return sin(x);
+    return exp(cos(x));
+    // return sin(x);
 }
 
 int main() {
-    generate_data(func, -3*M_PI, 2 * M_PI, 100);
-    
+    double a = -3 * M_PI;
+    double b = 2 * M_PI;
+    int num_points = 100;
 
-    // Запускаем Gnuplot и строим график
-    system("gnuplot -persist -e \"plot 'data.txt' with linespoints pointtype 7 linecolor 'blue'\"");
+    generate_data(func, a, b, num_points);
     
-    return 0;
+    system("gnuplot -persist -e \"set grid; plot 'data.txt' with linespoints pointtype 7 linecolor 'blue'\"");
 }
