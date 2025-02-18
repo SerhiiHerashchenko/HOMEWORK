@@ -91,7 +91,7 @@ h = (b - a) / n
 alg_presicion = 2 * n - 1
 
 result_h = gauss_quadrature(f, a, b, n)
-result_2h = gauss_quadrature(f, a, b, n/2)
+result_2h = gauss_quadrature(f, a, b, 2 * n)
 print("n = " + str(n))
 
 E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
@@ -102,7 +102,7 @@ while E >= eps:
     h = h / 2
     n = 2 * n
     result_h = gauss_quadrature(f, a, b, n)
-    result_2h = gauss_quadrature(f, a, b, n/2)
+    result_2h = gauss_quadrature(f, a, b, 2 * n)
     E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
     print("n = " + str(n))
     print("Error:", E.evalf())

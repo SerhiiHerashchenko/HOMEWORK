@@ -30,7 +30,7 @@ alg_presicion = 1
 print("n = " + str(n))
 
 result_h = Trapezoidal_rule(f, a, b, n, h)
-result_2h = Trapezoidal_rule(f, a, b, n/2, 2*h)
+result_2h = Trapezoidal_rule(f, a, b, 2 * n, h / 2)
 
 E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
 print("Error:", E.evalf())
@@ -38,9 +38,9 @@ print("Error:", E.evalf())
 # ------------------ Runge Accuracy Control ------------------
 while E >= eps:
     h = h / 2
-    n = sp.floor((b - a) / h)
+    n = 2 * n
     result_h = Trapezoidal_rule(f, a, b, n, h)
-    result_2h = Trapezoidal_rule(f, a, b, n/2, 2 * h)
+    result_2h = Trapezoidal_rule(f, a, b, 2 * n, h / 2)
     E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
     print("n = " + str(n))
     print("Error:", E.evalf())

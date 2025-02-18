@@ -17,13 +17,13 @@ unsigned int factorial(int n){
 
 int main(){
     double eps = 0.001;
-    int n = 1;
-    double a_i = pow(-1, n) / (pow(2, n) * factorial(n));
+    double n = 1;
+    double a_i = -1.0/2.0;
     double series_sum = a_i;
 
     while(abs(a_i) >= eps){
         n++;
-        a_i = pow(-1, n) / (pow(2, n) * factorial(n));
+        a_i *= -1 / (2 * n);
         series_sum += a_i;
     }
 

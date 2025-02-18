@@ -1,5 +1,6 @@
 import numpy as np
 import sympy as sp
+
 # ------------------ Gauss Quadrature for Double Integrals ------------------
 def Gauss_Quadrature_2d(f, a, A, b, B, n):
     print(n)
