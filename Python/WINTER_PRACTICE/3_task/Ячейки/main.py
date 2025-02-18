@@ -34,7 +34,7 @@ print("n =", n)
 print("m =", m)
 
 result_h = Riemann_midpoint_method(f, a, b, n, m, h, k)
-result_2h = Riemann_midpoint_method(f, a, b, n/2, m/2, 2*h, 2*k)
+result_2h = Riemann_midpoint_method(f, a, b, n * 2, m * 2, h / 2, k / 2)
 
 E = abs(result_h - result_2h) / (2**alg_precision - 1)
 print("Error:", E.evalf())
@@ -44,7 +44,7 @@ while E >= eps:
     h, k = h / 2, k / 2
     n, m = 2 * n, 2 * m
     result_h = Riemann_midpoint_method(f, a, b, n, m, h, k)
-    result_2h = Riemann_midpoint_method(f, a, b, n/2, m/2, 2*h, 2*k)
+    result_2h = Riemann_midpoint_method(f, a, b, n * 2, m * 2, h / 2, k / 2)
     E = abs(result_h - result_2h) / (2**alg_precision - 1)
     print("n =", n)
     print("m =", m)

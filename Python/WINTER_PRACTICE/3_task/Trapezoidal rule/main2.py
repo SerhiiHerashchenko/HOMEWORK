@@ -39,7 +39,7 @@ print("n =", n)
 print("m =", m)
 
 fi_h = Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k)
-fi_2h = Trapezoidal_cubature_rule(f, a, A, b, B, n/2, m/2, 2*h, 2*k)
+fi_2h = Trapezoidal_cubature_rule(f, a, A, b, B, n * 2, m * 2, h / 2, k / 2)
 
 E = abs(fi_h - fi_2h) / (2**alg_precision - 1)
 print("Error:", E.evalf())
@@ -49,7 +49,7 @@ while E >= eps:
     h, k = h / 2, k / 2
     n, m = 2 * n, 2 * m
     fi_h = Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k)
-    fi_2h = Trapezoidal_cubature_rule(f, a, A, b, B, n/2, m/2, 2*h, 2*k)
+    fi_2h = Trapezoidal_cubature_rule(f, a, A, b, B, n * 2, m * 2, h / 2, k / 2)
     E = abs(fi_h - fi_2h) / (2**alg_precision - 1)
     print("n =", n)
     print("m =", m)

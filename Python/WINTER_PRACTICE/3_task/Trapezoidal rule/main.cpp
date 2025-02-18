@@ -51,9 +51,9 @@ int main(){
     cout << "m = " << m << "\n";
 
     double result_h = Trapezoidal_cubature_rule(func, a, A, b, B, n, m, h, k);
-    double result_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n/2, m/2, 2*h, 2*k);
+    double result_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n * 2, m * 2, h / 2, k / 2);
 
-    cout << setprecision(4);
+    cout << setprecision(5);
 
     double E = abs(result_h - result_2h) / (pow(2, alg_precision) - 1);
     cout << "Error: " << E << "\n";
@@ -64,7 +64,7 @@ int main(){
         n = 2 * n;
         m = 2 * m,
         result_h = Trapezoidal_cubature_rule(func, a, A, b, B, n, m, h, k);
-        result_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n/2, m/2, 2*h, 2*k);
+        result_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n * 2, m * 2, h / 2, k / 2);
         E = abs(result_h - result_2h) / (pow(2, alg_precision) - 1);
         cout << "n = " << n << "\n";
         cout << "m = " << m << "\n";        

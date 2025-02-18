@@ -1,53 +1,60 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
 // ------------------ Gauss Quadrature for Double Integrals ------------------
-double Gauss_Quadrature_2d(double (*f)(double, double), double a, double A, double b, double B, int n){
-    vector<double> roots;
-    vector<double> weights;
+double Gauss_Quadrature_2d(double (*f)(double, double), double a, double A, double b, double B, int n, int alg_presicion) {
+    vector<double> roots, weights;
 
-    if(n == 5){
-        roots.assign({-0.906179845938664, -0.538469310105683, 0, 0.538469310105683, 0.906179845938664});
-        weights.assign({0.236926885056189, 0.478628670499366, 0.568888888888889, 0.478628670499366, 0.236926885056189});
-    }
-    else if(n == 4){
-        roots.assign({-0.861136311594053, -0.339981043584856, 0.339981043584856, 0.861136311594053});
-        weights.assign({0.3478548451374529, 0.6521451548625463, 0.6521451548625463, 0.3478548451374529});
-    }
-    else if(n == 3){
-        roots.assign({-0.774596669241483, 0, 0.774596669241483});
-        weights.assign({0.555555555555556, 0.888888888888889, 0.555555555555556});
-    }
-    else if(n == 2){
-        roots.assign({-0.577350269189626, 0.577350269189626});
-        weights.assign({1, 1});
-    }
-    else{
-        roots.assign({0});
-        weights.assign({2});
+    if (alg_presicion == 5) {
+        roots = {-0.906179845938664, -0.538469310105683, 0, 0.538469310105683, 0.906179845938664};
+        weights = {0.236926885056189, 0.478628670499366, 0.568888888888889, 0.478628670499366, 0.236926885056189};
+    } else if (alg_presicion == 4) {
+        roots = {-0.861136311594053, -0.339981043584856, 0.339981043584856, 0.861136311594053};
+        weights = {0.3478548451374529, 0.6521451548625463, 0.6521451548625463, 0.3478548451374529};
+    } else if (alg_presicion == 3) {
+        roots = {-0.774596669241483, 0, 0.774596669241483};
+        weights = {0.555555555555556, 0.888888888888889, 0.555555555555556};
+    } else if (alg_presicion == 2) {
+        roots = {-0.577350269189626, 0.577350269189626};
+        weights = {1, 1};
+    } else {
+        roots = {0};
+        weights = {2};
     }
 
-    vector<double> x_roots_transformed;
-    vector<double> y_roots_transformed;
-
-    for(double root : roots){
-        x_roots_transformed.push_back(((A - a) / 2) * root + (A + a) / 2);
-        y_roots_transformed.push_back(((B - b) / 2) * root + (B + b) / 2);
-    }
-    
+    double h_a = (A - a) / n;
+    double h_b = (B - b) / n;
     double integral = 0;
-    
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
-            integral += (weights[i] * weights[j] * f(x_roots_transformed[i], y_roots_transformed[j]));
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            double a_tmp = a + i * h_a;
+            double A_tmp = a_tmp + h_a;
+            double b_tmp = b + j * h_b;
+            double B_tmp = b_tmp + h_b;
+
+            double tmp_integral = 0;
+
+            for (int j = 0; j < alg_presicion; j++) {
+                double x_mapped = (A_tmp - a_tmp) / 2 * roots[j] + (A_tmp + a_tmp) / 2;
+
+                for (int k = 0; k < alg_presicion; k++) {
+                    double y_mapped = (B_tmp - b_tmp) / 2 * roots[k] + (B_tmp + b_tmp) / 2;
+                    tmp_integral += weights[j] * weights[k] * f(x_mapped, y_mapped);
+                }
+            }
+
+            integral += ((A_tmp - a_tmp) / 2) * ((B_tmp - b_tmp) / 2) * tmp_integral;
         }
     }
-    
-    return ((A - a) / 2) * ((B - b) / 2) * integral;
+
+    return integral;
 }
+
 
 double func(double x, double y) { return 2 * x * sin(x * y); }
 // ------------------ My Integral ------------------
@@ -66,8 +73,8 @@ int main(){
     
     cout << "n = " << n << endl;
     
-    double result_h = Gauss_Quadrature_2d(func, a, A, b, B, n);
-    double result_2h = Gauss_Quadrature_2d(func, a, A, b, B, int(n / 2));
+    double result_h = Gauss_Quadrature_2d(func, a, A, b, B, n, alg_presicion);
+    double result_2h = Gauss_Quadrature_2d(func, a, A, b, B, 2 * n, alg_presicion);
     
     double E = abs(result_h - result_2h) / (pow(2, alg_presicion) - 1);
     cout << "Error: " << E << endl;
@@ -75,12 +82,12 @@ int main(){
     // ------------------ Runge Accuracy Control ------------------
     while(E >= eps){
         n = 2 * n;
-        result_h = Gauss_Quadrature_2d(func, a, A, b, B, n);
-        result_2h = Gauss_Quadrature_2d(func, a, A, b, B, int(n / 2));
+        result_h = Gauss_Quadrature_2d(func, a, A, b, B, n, alg_presicion);
+        result_2h = Gauss_Quadrature_2d(func, a, A, b, B, 2 * n, alg_presicion);
         E = abs(result_h - result_2h) / (pow(2, alg_presicion) - 1);
         cout << "n = " << n << endl;
         cout << "Error: " << E << endl;
     }
 
-    cout << result_h;
+    cout << setprecision(9) << result_h;
 }

@@ -3,7 +3,6 @@ import sympy as sp
 
 # ------------------ Gauss Quadrature for Double Integrals ------------------
 def Gauss_Quadrature_2d(f, a, A, b, B, n):
-    print(n)
     roots = []
     weights = []
 
@@ -52,7 +51,7 @@ alg_presicion = 2 * n - 1
 print("n =", n)
 
 result_h = Gauss_Quadrature_2d(f, a, A, b, B, n)
-result_2h = Gauss_Quadrature_2d(f, a, A, b, B, int(n / 2))
+result_2h = Gauss_Quadrature_2d(f, a, A, b, B, 2 * n)
 
 E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
 print("Error:", E.evalf())
@@ -61,7 +60,7 @@ print("Error:", E.evalf())
 while E >= eps:
     n = 2 * n
     result_h = Gauss_Quadrature_2d(f, a, A, b, B, n)
-    result_2h = Gauss_Quadrature_2d(f, a, A, b, B, int(n / 2))
+    result_2h = Gauss_Quadrature_2d(f, a, A, b, B, 2 * n)
     E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
     print("n =", n)
     print("Error:", E.evalf())

@@ -35,7 +35,7 @@ alg_presicion = 3
 print("n = " + str(n))
 
 result_h = Composite_Simpson_rule(f, a, b, n, h)
-result_2h = Composite_Simpson_rule(f, a, b, n/2, 2*h)
+result_2h = Composite_Simpson_rule(f, a, b, 2 * n, h / 2)
 
 E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
 print("Error:", E.evalf())
@@ -46,7 +46,7 @@ while E >= eps:
     N = 2 * n
     h = (b - a) / N
     result_h = Composite_Simpson_rule(f, a, b, n, h)
-    result_2h = Composite_Simpson_rule(f, a, b, n / 2, h * 2)
+    result_2h = Composite_Simpson_rule(f, a, b, 2 * n, h / 2)
     E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
     print("n = " + str(n))
     print("Error:", E.evalf())
