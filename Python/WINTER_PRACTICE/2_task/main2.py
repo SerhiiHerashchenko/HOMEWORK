@@ -1,16 +1,15 @@
 import sympy as sp
 # ------------------ Riemann midpoint method ------------------
 
-def Riemann_midpoint_method(f, a, b, n, h):
-
-    x = a
+def Riemann_midpoint_method(f, a, b, n):
     integral = 0
+    h = (b - a) / n
 
-    for i in range(int(n)):
-        integral += f((x + (x + h)) / 2) * h
-        x += h
+    for i in range(int(n) + 1):
+        x = a + (i - 0.5) * h
+        integral += f(x)
 
-    return integral
+    return h * integral
 
 # ------------------ My Integral ------------------
 
@@ -23,29 +22,26 @@ b = sp.pi / 2
 
 n = 10
 
-h = (b - a) / n
-
 alg_presicion = 1
 
 print("n = " + str(n))
 
-result_h = Riemann_midpoint_method(f, a, b, n, h)
-result_2h = Riemann_midpoint_method(f, a, b, 2 * n, h / 2)
+result_n = Riemann_midpoint_method(f, a, b, n)
+result_2n = Riemann_midpoint_method(f, a, b, 2 * n)
 
-E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
+E = abs(result_n - result_2n) / (2**(alg_presicion) - 1)
 print("Error:", E.evalf())
 
 # ------------------ Runge Accuracy Control ------------------
 while E >= eps:
-    h = h / 2
     n = 2 * n
-    result_h = Riemann_midpoint_method(f, a, b, n, h)
-    result_2h = Riemann_midpoint_method(f, a, b, 2 * n, h / 2)
-    E = abs(result_h - result_2h) / (2**(alg_presicion) - 1)
+    result_n = result_2n
+    result_2n = Riemann_midpoint_method(f, a, b, 2 * n)
+    E = abs(result_n - result_2n) / (2**(alg_presicion) - 1)
     print("n = " + str(n))
     print("Error:", E.evalf())
 
-print("Riemann midpoint method(h):", round(result_h.evalf(), 4))
+print("Riemann midpoint method(h):", round(result_n.evalf(), 4))
 
 x = sp.symbols('x')
 exact_result = sp.integrate(f(x), (x, a, b))

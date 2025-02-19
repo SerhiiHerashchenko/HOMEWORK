@@ -39,12 +39,12 @@ double Gauss_Quadrature_2d(double (*f)(double, double), double a, double A, doub
 
             double tmp_integral = 0;
 
-            for (int j = 0; j < alg_presicion; j++) {
-                double x_mapped = (A_tmp - a_tmp) / 2 * roots[j] + (A_tmp + a_tmp) / 2;
+            for (int k = 0; k < alg_presicion; k++) {
+                double x_mapped = (A_tmp - a_tmp) / 2 * roots[k] + (A_tmp + a_tmp) / 2;
 
-                for (int k = 0; k < alg_presicion; k++) {
-                    double y_mapped = (B_tmp - b_tmp) / 2 * roots[k] + (B_tmp + b_tmp) / 2;
-                    tmp_integral += weights[j] * weights[k] * f(x_mapped, y_mapped);
+                for (int l = 0; l < alg_presicion; l++) {
+                    double y_mapped = (B_tmp - b_tmp) / 2 * roots[l] + (B_tmp + b_tmp) / 2;
+                    tmp_integral += weights[k] * weights[l] * f(x_mapped, y_mapped);
                 }
             }
 
@@ -68,26 +68,26 @@ int main(){
     double b = 0;
     double B = M_PI / 2;
     
-    int n = 2;
+    int n = 1;
     int alg_presicion = 2 * n - 1;
     
     cout << "n = " << n << endl;
     
-    double result_h = Gauss_Quadrature_2d(func, a, A, b, B, n, alg_presicion);
-    double result_2h = Gauss_Quadrature_2d(func, a, A, b, B, 2 * n, alg_presicion);
+    double result_n = Gauss_Quadrature_2d(func, a, A, b, B, n, alg_presicion);
+    double result_2n = Gauss_Quadrature_2d(func, a, A, b, B, 2 * n, alg_presicion);
     
-    double E = abs(result_h - result_2h) / (pow(2, alg_presicion) - 1);
+    double E = abs(result_n - result_2n) / (pow(2, alg_presicion) - 1);
     cout << "Error: " << E << endl;
     
     // ------------------ Runge Accuracy Control ------------------
     while(E >= eps){
         n = 2 * n;
-        result_h = Gauss_Quadrature_2d(func, a, A, b, B, n, alg_presicion);
-        result_2h = Gauss_Quadrature_2d(func, a, A, b, B, 2 * n, alg_presicion);
-        E = abs(result_h - result_2h) / (pow(2, alg_presicion) - 1);
+        result_n = result_2n;
+        result_2n = Gauss_Quadrature_2d(func, a, A, b, B, 2 * n, alg_presicion);
+        E = abs(result_n - result_2n) / (pow(2, alg_presicion) - 1);
         cout << "n = " << n << endl;
         cout << "Error: " << E << endl;
     }
 
-    cout << setprecision(9) << result_h;
+    cout << setprecision(5) << result_n;
 }

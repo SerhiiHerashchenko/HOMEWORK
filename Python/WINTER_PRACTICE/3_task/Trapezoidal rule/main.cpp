@@ -6,7 +6,9 @@ using namespace std;
 double func(double x, double y){
     return 2 * x * sin(x * y);
 }
-double Trapezoidal_cubature_rule(double f(double x, double y), double a, double A, double b, double B, int n, int m, double h, double k){
+double Trapezoidal_cubature_rule(double f(double x, double y), double a, double A, double b, double B, int n, int m){
+    double h = (A - a) / n;
+    double k =  (B - b) / m;
     double x = a;
     double y = b;
     double integral = 0;
@@ -27,8 +29,7 @@ double Trapezoidal_cubature_rule(double f(double x, double y), double a, double 
         x += h;
     }
 
-    integral *= (h * k);
-    return integral;
+    return h * k * integral;
 }
 
 int main(){
@@ -42,33 +43,29 @@ int main(){
 
     int n = 3;
     int m = 3;
-    double h = (A - a) / n;
-    double k =  (B - b) / m;
 
     int alg_precision = 1;
 
     cout << "n = " << n << "\n";
     cout << "m = " << m << "\n";
 
-    double result_h = Trapezoidal_cubature_rule(func, a, A, b, B, n, m, h, k);
-    double result_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n * 2, m * 2, h / 2, k / 2);
+    double result_n = Trapezoidal_cubature_rule(func, a, A, b, B, n, m);
+    double result_2n = Trapezoidal_cubature_rule(func, a, A, b, B, n * 2, m * 2);
 
-    cout << setprecision(5);
+    cout << setprecision(4);
 
-    double E = abs(result_h - result_2h) / (pow(2, alg_precision) - 1);
+    double E = abs(result_n - result_2n) / (pow(2, alg_precision) - 1);
     cout << "Error: " << E << "\n";
 
     while(E >= eps){
-        h = h / 2;
-        k = k / 2, 
         n = 2 * n;
         m = 2 * m,
-        result_h = Trapezoidal_cubature_rule(func, a, A, b, B, n, m, h, k);
-        result_2h = Trapezoidal_cubature_rule(func, a, A, b, B, n * 2, m * 2, h / 2, k / 2);
-        E = abs(result_h - result_2h) / (pow(2, alg_precision) - 1);
+        result_n = result_2n;
+        result_2n = Trapezoidal_cubature_rule(func, a, A, b, B, n * 2, m * 2);
+        E = abs(result_n - result_2n) / (pow(2, alg_precision) - 1);
         cout << "n = " << n << "\n";
         cout << "m = " << m << "\n";        
         cout << "Error: " << E << "\n";
     }
-    cout << "Trapezoidal rule (h): " << result_h << "\n";
+    cout << "Trapezoidal rule (h): " << result_n << "\n";
 }

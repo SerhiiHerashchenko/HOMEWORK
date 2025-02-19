@@ -3,7 +3,8 @@ import sympy as sp
 
 # ------------------ Trapezoidal Rule ------------------
 
-def Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k):
+def Trapezoidal_cubature_rule(f, a, A, b, B, n, m):
+    h, k = (A - a) / n, (B - b) / m
     x = a
     y = b
     integral = 0
@@ -31,31 +32,29 @@ a, A = 0, 1
 b, B = 0, sp.pi / 2
 
 n, m = 3, 3
-h, k = (A - a) / n, (B - b) / m
 
 alg_precision = 1
 
 print("n =", n)
 print("m =", m)
 
-fi_h = Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k)
-fi_2h = Trapezoidal_cubature_rule(f, a, A, b, B, n * 2, m * 2, h / 2, k / 2)
+result_n = Trapezoidal_cubature_rule(f, a, A, b, B, n, m)
+result_2n = Trapezoidal_cubature_rule(f, a, A, b, B, n * 2, m * 2)
 
-E = abs(fi_h - fi_2h) / (2**alg_precision - 1)
+E = abs(result_n - result_2n) / (2**alg_precision - 1)
 print("Error:", E.evalf())
 
 # ------------------ Runge Accuracy Control ------------------
 while E >= eps:
-    h, k = h / 2, k / 2
     n, m = 2 * n, 2 * m
-    fi_h = Trapezoidal_cubature_rule(f, a, A, b, B, n, m, h, k)
-    fi_2h = Trapezoidal_cubature_rule(f, a, A, b, B, n * 2, m * 2, h / 2, k / 2)
-    E = abs(fi_h - fi_2h) / (2**alg_precision - 1)
+    result_n = result_2n
+    result_2n = Trapezoidal_cubature_rule(f, a, A, b, B, n * 2, m * 2)
+    E = abs(result_n - result_2n) / (2**alg_precision - 1)
     print("n =", n)
     print("m =", m)
     print("Error:", E.evalf())
 
-print("Trapezoidal rule (h):", round(fi_h, 4))
+print("Trapezoidal rule (h):", round(result_n, 4))
 
 x, y = sp.symbols('x y')
 
