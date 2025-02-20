@@ -25,7 +25,11 @@ double func(double x) {
 int main() {
     double a = -3 * M_PI;
     double b = 2 * M_PI;
-    int num_points = 100;
+    int num_points;
+
+    cout << "Enter number of points(int), ";
+    cout << "that is, the precision with which you want to draw approximate graph  of the given function" << endl;
+    cin >> num_points;
 
     generate_data(func, a, b, num_points);
     

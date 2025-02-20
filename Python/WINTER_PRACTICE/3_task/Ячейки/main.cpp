@@ -32,7 +32,12 @@ double f(double x, double y) {
 // ------------------ My Integral ------------------
 
 int main() {
-    double eps = 0.001;
+    double eps;
+
+    cout << "Enter a floating-point number eps, ";
+    cout << "that is, the precision with which you want to numerically find approximate value of the given integral" << endl;
+    cin >> eps;
+
     double a = 0, A = 1;
     double b = 0, B = M_PI / 2;
     int n = 5, m = 5;
@@ -59,6 +64,7 @@ int main() {
         cout << "m = " << m << endl;
         cout << "Error: " << E << endl;
     }
+    double z = log(eps)/log(10);
 
-    cout << "Riemann midpoint method (h): " << setprecision(6) << result_n << endl;
+    cout << "Riemann midpoint method (h): " << setprecision(z + 1) << result_n << endl;
 }

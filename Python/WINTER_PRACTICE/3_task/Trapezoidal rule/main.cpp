@@ -19,7 +19,7 @@ double Trapezoidal_cubature_rule(double f(double x, double y), double a, double 
         for(int j = 0; j <= m; j++){
             if ((i > 0) && (i < n) && (j > 0) && (j < m))
                 w = 1;
-            else if ((i==0 | i==n ) & (j==0 | j==m))
+            else if ((i==0 || i==n ) && (j==0 || j==m))
                 w = 0.25;
             else
                 w = 0.5;
@@ -33,7 +33,11 @@ double Trapezoidal_cubature_rule(double f(double x, double y), double a, double 
 }
 
 int main(){
-    double eps = 0.001;
+    double eps;
+
+    cout << "Enter a floating-point number eps, ";
+    cout << "that is, the precision with which you want to numerically find approximate value of the given integral" << endl;
+    cin >> eps;
 
     double a = 0;
     double A = 1;
@@ -52,8 +56,6 @@ int main(){
     double result_n = Trapezoidal_cubature_rule(func, a, A, b, B, n, m);
     double result_2n = Trapezoidal_cubature_rule(func, a, A, b, B, n * 2, m * 2);
 
-    cout << setprecision(4);
-
     double E = abs(result_n - result_2n) / (pow(2, alg_precision) - 1);
     cout << "Error: " << E << "\n";
 
@@ -67,5 +69,8 @@ int main(){
         cout << "m = " << m << "\n";        
         cout << "Error: " << E << "\n";
     }
-    cout << "Trapezoidal rule (h): " << result_n << "\n";
+
+    double z = log(eps)/log(10);
+
+    cout << "Trapezoidal rule (h): " << setprecision(z + 1) << result_n << "\n";
 }

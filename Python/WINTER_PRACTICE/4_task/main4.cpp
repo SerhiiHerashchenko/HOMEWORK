@@ -24,12 +24,19 @@ void generate_data(double x_min, double x_max, double y_min, double y_max, int n
 }
 
 int main() {
-    int num_points = 50;
+    int num_points;
+
+    cout << "Enter number of points(int), ";
+    cout << "that is, the precision with which you want to draw approximate graph  of the given function" << endl;
+    cin >> num_points;
+
     double x_min = -2;
     double x_max = 2;
     double y_min = -2 * M_PI;
     double y_max = 2 * M_PI;
     generate_data(x_min, x_max, y_min, y_max, num_points, func);
 
-    system("gnuplot -persist -e \"set dgrid3d 50,50; set hidden3d; splot 'data3d.txt' with lines\"");
+    string s = "gnuplot -persist -e \"set dgrid3d " + to_string(num_points) + "," + to_string(num_points) + "; set hidden3d; splot 'data3d.txt' with lines\"";
+
+    system(s.c_str());
 }
