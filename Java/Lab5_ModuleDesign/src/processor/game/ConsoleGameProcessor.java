@@ -40,7 +40,7 @@ public class ConsoleGameProcessor implements GameProcessor{
                 System.out.println(this.currentPlayer.getName() + ", you've just written something that is not a number, thus try again!");
             }
             else if (moveCondition == EGLU.Equals) {
-                BannerReader banner = new BannerReader("C:\\ALL\\FOR-CODING\\GitHub repositories\\HOMEWORK\\Java\\Lab5_ModuleDesign\\src\\resources\\Winner_Banner.txt");
+                BannerReader banner = new BannerReader("C:\\All\\Programs\\GitHub repositories\\HOMEWORK\\Java\\Lab5_ModuleDesign\\src\\resources\\Winner_Banner.txt");
                 String message = (new StringProcessData()).getData(banner);
                 
                 System.out.print(message + "\nFinally... You've just figured out given number. Well, it didn't take a century! \n"

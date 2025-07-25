@@ -22,6 +22,6 @@ ax.legend(loc='best')
 ax.set_xlim(-r - 1, r + 1)
 ax.set_ylim(-r - 1, r + 1)
 
-plt.savefig('C:\ALL\GitHub repositories\HOMEWORK\Python\L3_V2_Herashchenko\8_task\circle_square.png', dpi=400)
+plt.savefig('C:\All\Programs\GitHub repositories\HOMEWORK\Python\\1_SEMESTER\L3_V2_Herashchenko\8_task\circle_square.png', dpi=400)
 
 plt.show()

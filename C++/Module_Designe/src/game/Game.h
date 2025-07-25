@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\StringPlayer.h>
-#include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\PlayerInterface.h>
-#include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\game\gameProcessor\Processor.h>
-#include <C:\ALL\FOR-CODING\GitHub repositories\HOMEWORK\C++\Module_Designe\src\data\processData\BannerProcessor.h>
+#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\StringPlayer.h>
+#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\PlayerInterface.h>
+#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\game\gameProcessor\Processor.h>
+#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\data\processData\BannerProcessor.h>
 
 class Game{
 public:
@@ -33,7 +33,7 @@ public:
                     is_winner = true;
                     cout << "Yes, finally, you pick the right number. That didn't take a centure\n";
                     BannerProcessor* bp = new BannerProcessor();
-                    bp->readData("C:/ALL/FOR-CODING/GitHub repositories/HOMEWORK/C++/Module_Designe/src/resources/Winner_Banner.txt");
+                    bp->readData("C:/All/Programs/GitHub repositories/HOMEWORK/C++/Module_Designe/src/resources/Winner_Banner.txt");
                     cout << bp->getData();
                     cout << "Do you want to continue playing?\nY:1/N:0\n";
                     
