@@ -2,6 +2,7 @@
 #define DATAPROCESSORINTERFACE_H
 
 #include <string>
+
 using namespace std;
 
 class DataProcessorInterface{

@@ -1,4 +1,4 @@
-#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\game\gameProcessor\EGLU.h>
+#include "src\game\gameProcessor\EGLU.h"
 
 class Processor{
 public:

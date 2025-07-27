@@ -1,0 +1,15 @@
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\bin\Debug\net9.0\test2.exe
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\bin\Debug\net9.0\test2.deps.json
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\bin\Debug\net9.0\test2.runtimeconfig.json
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\bin\Debug\net9.0\test2.dll
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\bin\Debug\net9.0\test2.pdb
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\test2.GeneratedMSBuildEditorConfig.editorconfig
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\test2.AssemblyInfoInputs.cache
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\test2.AssemblyInfo.cs
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\test2.csproj.CoreCompileInputs.cache
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\test2.sourcelink.json
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\test2.dll
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\refint\test2.dll
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\test2.pdb
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\test2.genruntimeconfig.cache
+C:\All\Programs\GitHub repositories\HOMEWORK\C#\test2\obj\Debug\net9.0\ref\test2.dll

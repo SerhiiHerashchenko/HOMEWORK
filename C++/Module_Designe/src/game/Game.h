@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\StringPlayer.h>
-#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\PlayerInterface.h>
-#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\game\gameProcessor\Processor.h>
-#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\data\processData\BannerProcessor.h>
+#include "src\player\PlayerInterface.h"
+#include "src\player\StringPlayer.h"
+#include "src\game\gameProcessor\Processor.h"
+#include "src\data\processData\BannerProcessor.h"
 
 class Game{
 public:

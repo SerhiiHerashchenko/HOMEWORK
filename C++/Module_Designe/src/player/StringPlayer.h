@@ -1,6 +1,6 @@
 #include <string>
-#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\data\processData\StringDataProcessor.h>
-#include <C:\All\Programs\GitHub repositories\HOMEWORK\C++\Module_Designe\src\player\PlayerInterface.h>
+#include "src\data\processData\StringDataProcessor.h"
+#include "src\player\PlayerInterface.h"
 
 using namespace std;
 
