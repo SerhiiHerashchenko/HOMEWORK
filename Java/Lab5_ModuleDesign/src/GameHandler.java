@@ -10,7 +10,6 @@ import Lab5_ModuleDesign.src.processor.game.ConsoleGameProcessor;
 
 public class GameHandler {
     public static void main(String[] args) {
-
         try {
             System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         } catch (Exception e) {

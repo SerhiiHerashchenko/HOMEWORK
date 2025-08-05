@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-data = pd.read_excel('C:\\ALL\\OTHER\\GitHub\\HOMEWORK\\Python\\L4_V2_Herashchenko\\1_task\\vaccination_process_2021_regions.xlsx')
+data = pd.read_excel('C:\\All\\Programs\\GitHub repositories\\HOMEWORK\Python\\1_SEMESTER\\L4_V2_Herashchenko\\1_task\\vaccination_process_2021_regions.xlsx')
 
 x = data[['Назва території','Дата (період) данних', 'Pfizer-BioNTech, осіб']]
 

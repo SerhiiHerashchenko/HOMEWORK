@@ -19,6 +19,7 @@ public:
 
     bool play(){
         cout << "Let's get ready to rumble!\n";
+        cout << guessed_number;
         while (!is_winner){
             try{
                 string current_move_str = player->makeMove();
@@ -33,7 +34,7 @@ public:
                     is_winner = true;
                     cout << "Yes, finally, you pick the right number. That didn't take a centure\n";
                     BannerProcessor* bp = new BannerProcessor();
-                    bp->readData("C:/All/Programs/GitHub repositories/HOMEWORK/C++/Module_Designe/src/resources/Winner_Banner.txt");
+                    bp->readData("./Module_Designe/src/resources/Winner_Banner.txt");
                     cout << bp->getData();
                     cout << "Do you want to continue playing?\nY:1/N:0\n";
                     

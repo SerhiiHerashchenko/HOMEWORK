@@ -1,7 +1,7 @@
 import pandas as pd
 
-flights_df = pd.read_csv('C:\\ALL\\OTHER\\GitHub\\HOMEWORK\\Python\\L4_V2_Herashchenko\\4_task\\2008_rand.csv')
-airports_df = pd.read_csv('C:\\ALL\\OTHER\\GitHub\HOMEWORK\\Python\\L4_V2_Herashchenko\\4_task\\airports.csv')
+flights_df = pd.read_csv('C:\\All\\Programs\\GitHub repositories\\HOMEWORK\\Python\\1_SEMESTER\\L4_V2_Herashchenko\\4_task\\2008_rand.csv')
+airports_df = pd.read_csv('C:\\All\\Programs\\GitHub repositories\HOMEWORK\\Python\\1_SEMESTER\\L4_V2_Herashchenko\\4_task\\airports.csv')
 
 mean_distance = flights_df['Distance'].mean()
 min_distance = flights_df['Distance'].min()
