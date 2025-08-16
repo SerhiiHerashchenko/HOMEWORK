@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include "src\player\PlayerInterface.h"
-#include "src\player\StringPlayer.h"
-#include "src\game\gameProcessor\Processor.h"
-#include "src\data\processData\BannerProcessor.h"
+#include "../player/PlayerInterface.h"
+#include "../player/StringPlayer.h"
+#include "../game/gameProcessor/Processor.h"
+#include "../data/processData/BannerProcessor.h"
 
 class Game{
 public:
@@ -34,7 +34,7 @@ public:
                     is_winner = true;
                     cout << "Yes, finally, you pick the right number. That didn't take a centure\n";
                     BannerProcessor* bp = new BannerProcessor();
-                    bp->readData("./Module_Designe/src/resources/Winner_Banner.txt");
+                    bp->readData("src/resources/Winner_Banner.txt");
                     cout << bp->getData();
                     cout << "Do you want to continue playing?\nY:1/N:0\n";
                     

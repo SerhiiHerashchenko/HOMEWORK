@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "src\data\processData\DataProcessorInterface.h"
+#include "./DataProcessorInterface.h"
 
 using namespace std;
 

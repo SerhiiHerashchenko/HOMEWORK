@@ -1,6 +1,6 @@
 #include <string>
-#include "src\data\processData\StringDataProcessor.h"
-#include "src\player\PlayerInterface.h"
+#include "..\data\processData\StringDataProcessor.h"
+#include "..\player\PlayerInterface.h"
 
 using namespace std;
 

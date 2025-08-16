@@ -1,4 +1,4 @@
-#include "src\game\gameProcessor\EGLU.h"
+#include "./EGLU.h"
 
 class Processor{
 public:

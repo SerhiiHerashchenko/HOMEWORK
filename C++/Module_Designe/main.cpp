@@ -1,5 +1,5 @@
 #include <windows.h>
-#include "src\game\Game.h"
+#include "src/game/Game.h"
 using namespace std;
 
 int main(){
